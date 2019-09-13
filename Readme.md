@@ -1,0 +1,57 @@
+﻿# Aark.Netatmo.Client
+
+Aark.Netatmo.Client is a library providing simple and complete access to Netatmo device data. It is based on the API provided by Netatmo through its [Netatmo Connect](https://dev.netatmo.com/) program.
+
+## Getting Started
+
+To use this API, you must first [declare a new application to Netatmo](https://dev.netatmo.com/myaccount/createanapp) in order to obtain a Client ID and a Client Secret.
+
+### Currently supported features
+
+* Full access to weather station data (instant and historical data for base, outdoor, indoor, anenometer and raingauge modules).
+* Partial access to energy data (reading instant data only, in progress).
+* No access to security data (not started).
+
+## How to use
+
+The entry point for using the API is the *NetatmoManager* class. Its constructor takes as parameters the Client ID and the Secret Client obtained via Netatmo Connect, as well as a Netatmo account identifier and the associated password.
+
+```csharp
+NetatmoManager netatmoManager = new NetatmoManager("YourClientId", "YourClientSecret", "NetatmoAccount", "NetatmoPassword");
+```
+
+You can then load one of the three main datasets provided by Netatmo:
+
+* Weather Station data
+* Energy data (thermostat and valves connected).
+* Security data (cameras and smoke detectors).
+
+For example, for the weather station, just call the following command:
+
+```csharp
+await netatmoManager.LoadWeatherDataAsync();
+```
+
+The loaded data will then be available in the *netatmoManager.WeatherStation* object. This object contains a list of Devices, each *Device* corresponding to a weather station referenced on the account of the connected Netatmo user. All stations are available, whether the user is the owner or just a guest.
+
+To obtain a history of the measurements of a module, you can call the *LoadMeasuresAsync()* function of the desired module by specifying the type of data to be reported. You can request several types of data simultaneously.
+
+The example below shows the historical temperature, humidity and noise data recorded by the base module of the first referenced weather station for the day of August 30, 2019:
+```csharp
+DateTime start = new DateTime(2019, 8, 30, 0, 0, 0);
+DateTime end = new DateTime(2019, 8, 30, 23, 59, 59);
+await netatmoManager.WeatherStation.Devices[0].Base.DefineDateRange(start, end).LoadMeasuresAsync(MeasuresFilters.Temperature | MeasuresFilters.Humidity | MeasuresFilters.Noise);
+```
+If you receive an error when connecting or recovering data, you can call *GetLastError()* to get the last error message returned by the API.
+
+```csharp
+netatmoManager.GetLastError();
+```
+
+## Authors
+
+* **Édouard Biton** - *Initial work* - [AArklendoïa](https://www.aarklendoia.com)
+
+## License
+
+This project is licensed under the MIT licence.
