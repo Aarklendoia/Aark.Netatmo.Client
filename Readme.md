@@ -1,6 +1,6 @@
-﻿# Aark.Netatmo.Client
+﻿# Aark.Netatmo.SDK
 
-Aark.Netatmo.Client is a library providing simple and complete access to Netatmo device data. It is based on the API provided by Netatmo through its [Netatmo Connect](https://dev.netatmo.com/) program.
+Aark.Netatmo.SDK is a library providing simple and complete access to Netatmo device data. It is based on the API provided by Netatmo through its [Netatmo Connect](https://dev.netatmo.com/) program.
 
 ## Getting Started
 
