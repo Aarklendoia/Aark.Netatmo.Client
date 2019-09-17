@@ -5,12 +5,12 @@
     <Description>Provides full access to the Netatmo API for weather stations, energy management and detection cameras.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Aarklendoïa</Authors>
-    <PackageVersion>1.0.0-alpha5</PackageVersion>
+    <PackageVersion>1.0.0-alpha</PackageVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\ebiton\source\repos\Aark.Netatmo.Client\Aark.Netatmo.Client\Aark.Netatmo.Client.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\edoua\Source\Repos\Aarklendoia\Aark.Netatmo.SDK\Aark.Netatmo.SDK\Aark.Netatmo.SDK.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

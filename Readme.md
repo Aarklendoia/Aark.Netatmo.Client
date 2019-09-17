@@ -1,4 +1,4 @@
-﻿# Aark.Netatmo.SDK
+# Aark.Netatmo.SDK
 
 Aark.Netatmo.SDK is a library providing simple and complete access to Netatmo device data. It is based on the API provided by Netatmo through its [Netatmo Connect](https://dev.netatmo.com/) program.
 
@@ -13,6 +13,8 @@ To use this API, you must first [declare a new application to Netatmo](https://d
 * No access to security data (not started).
 
 ## How to use
+
+Install the [nuget package](https://www.nuget.org/packages/Aark.Netatmo.SDK/).
 
 The entry point for using the API is the *NetatmoManager* class. Its constructor takes as parameters the Client ID and the Secret Client obtained via Netatmo Connect, as well as a Netatmo account identifier and the associated password.
 
