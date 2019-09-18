@@ -8,7 +8,7 @@
     <owners>$author$</owners>
 	<license type="expression">MIT</license>
 	<dependencies>
-		<dependency id="Newtonsoft.Json" version="12.0.0" />
+		<dependency id="Newtonsoft.Json" version="12.0.2" />
 	</dependencies>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
