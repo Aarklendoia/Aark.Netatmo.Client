@@ -95,7 +95,7 @@ namespace Aark.Netatmo.SDK
                     switch (module.Type.ToModuleType())
                     {
                         case ModuleType.Outdoor:
-
+                            weatherDevice.OutdoorModule.Load(module, weatherDevice.Base.Id);
                             break;
                         case ModuleType.Indoor:
                             IndoorModule indoorModule;
