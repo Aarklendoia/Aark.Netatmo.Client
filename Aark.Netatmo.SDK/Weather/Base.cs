@@ -168,6 +168,36 @@ namespace Aark.Netatmo.SDK.Weather
 
         }
 
+        internal void Load(Device device)
+        {
+            Id = device.Id;
+            DateSetup = device.DateSetup.ToLocalDateTime();
+            LastSetup = device.LastSetup.ToLocalDateTime();
+            Name = device.ModuleName;
+            Firmware = device.Firmware;
+            LastUpgrade = device.LastSetup.ToLocalDateTime();
+            WifiStatus = device.WifiStatus.ToSignalStatus();
+            Reachable = device.Reachable;
+            CO2Calibrating = device.Co2Calibrating;
+            StationName = device.StationName;
+            if (Reachable)
+            {
+                Time = device.DashboardData.TimeUtc.ToLocalDateTime();
+                Temperature = device.DashboardData.Temperature;
+                TemperatureMax = device.DashboardData.MaxTemp;
+                TemperatureMaxDate = device.DashboardData.DateMaxTemp.ToLocalDateTime();
+                TemperatureMin = device.DashboardData.MinTemp;
+                TemperatureMinDate = device.DashboardData.DateMinTemp.ToLocalDateTime();
+                TemperatureTrend = device.DashboardData.TempTrend.ToTrend();
+                Co2 = device.DashboardData.Co2;
+                Humidity = device.DashboardData.Humidity;
+                Noise = device.DashboardData.Noise;
+                Pressure = device.DashboardData.Pressure;
+                AbsolutePressure = device.DashboardData.AbsolutePressure;
+                PresureTrend = device.DashboardData.PressureTrend.ToTrend();
+            }
+        }
+
         /// <summary>
         /// Loads the historical data according to the defined filter.
         /// </summary>

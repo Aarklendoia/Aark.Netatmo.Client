@@ -74,6 +74,33 @@ namespace Aark.Netatmo.SDK.Weather
 
         }
 
+        internal override void Load(WeatherModule weatherModule, string baseId)
+        {
+            Available = true;
+            BaseId = baseId;
+            Id = weatherModule.Id;
+            Name = weatherModule.ModuleName;
+            LastSetup = weatherModule.LastSetup.ToLocalDateTime();
+            BatteryPercent = weatherModule.BatteryPercent;
+            Reachable = weatherModule.Reachable;
+            Firmware = weatherModule.Firmware;
+            LastMessage = weatherModule.LastMessage.ToLocalDateTime();
+            LastSeen = weatherModule.LastSeen.ToLocalDateTime();
+            RadioFrequenceStatus = weatherModule.RfStatus.ToSignalStatus();
+            BatteryStatus = weatherModule.BatteryVp.ToOutdoorBatteryStatus();
+            if (Reachable)
+            {
+                Time = weatherModule.DashboardData.TimeUtc.ToLocalDateTime();
+                Temperature = weatherModule.DashboardData.Temperature;
+                TemperatureMin = weatherModule.DashboardData.MinTemp;
+                TemperatureMinDate = weatherModule.DashboardData.DateMinTemp.ToLocalDateTime();
+                TemperatureMax = weatherModule.DashboardData.MaxTemp;
+                TemperatureMaxDate = weatherModule.DashboardData.DateMaxTemp.ToLocalDateTime();
+                TemperatureTrend = weatherModule.DashboardData.TempTrend;
+                Humidity = weatherModule.DashboardData.Humidity;
+            }
+        }
+
         /// <summary>
         /// Loads the historical data according to the defined filter.
         /// </summary>

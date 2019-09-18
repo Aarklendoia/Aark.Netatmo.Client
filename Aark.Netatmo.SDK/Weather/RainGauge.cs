@@ -1,6 +1,5 @@
 ﻿using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
-using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -35,6 +34,29 @@ namespace Aark.Netatmo.SDK.Weather
         internal RainGauge(APICommands aPICommands) : base(aPICommands)
         {
 
+        }
+
+        internal override void Load(WeatherModule weatherModule, string baseId)
+        {
+            Available = true;
+            BaseId = baseId;
+            Id = weatherModule.Id;
+            Name = weatherModule.ModuleName;
+            LastSetup = weatherModule.LastSetup.ToLocalDateTime();
+            BatteryPercent = weatherModule.BatteryPercent;
+            Reachable = weatherModule.Reachable;
+            Firmware = weatherModule.Firmware;
+            LastMessage = weatherModule.LastMessage.ToLocalDateTime();
+            LastSeen = weatherModule.LastSeen.ToLocalDateTime();
+            RadioFrequenceStatus = weatherModule.RfStatus.ToSignalStatus();
+            BatteryStatus = weatherModule.BatteryVp.ToRainGaugeBatteryStatus();
+            if (Reachable)
+            {
+                Time = weatherModule.DashboardData.TimeUtc.ToLocalDateTime();
+                Rain = weatherModule.DashboardData.Rain;
+                SumRainLastHour = weatherModule.DashboardData.SumRain1;
+                SumRainLast24h = weatherModule.DashboardData.SumRain24;
+            }
         }
 
         /// <summary>
