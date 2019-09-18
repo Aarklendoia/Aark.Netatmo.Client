@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Aiolos.Models.Netatmo.Model
+namespace Aark.Netatmo.SDK.Models
 {
     internal partial class ErrorData
     {

@@ -8,7 +8,7 @@ namespace Aark.Netatmo.SDK.Models
     internal partial class MeasuresData
     {
         [JsonProperty("body")]
-        internal List<Body> Body { get; set; }
+        internal List<StationDataBody> Body { get; set; }
 
         [JsonProperty("status")]
         internal string Status { get; set; }
@@ -20,7 +20,7 @@ namespace Aark.Netatmo.SDK.Models
         internal long TimeServer { get; set; }
     }
 
-    internal partial class Body
+    internal partial class StationDataBody
     {
         [JsonProperty("beg_time")]
         internal long BegTime { get; set; }

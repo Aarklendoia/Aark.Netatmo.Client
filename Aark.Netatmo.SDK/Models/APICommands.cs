@@ -1,6 +1,4 @@
 ﻿using Aark.Netatmo.SDK.Helpers;
-using Aiolos.Models.Netatmo.Model;
-using Aiolos.Models.Netatmo.Models;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;

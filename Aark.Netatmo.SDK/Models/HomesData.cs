@@ -10,7 +10,7 @@ namespace Aark.Netatmo.SDK.Models
     internal partial class HomesData
     {
         [JsonProperty("body")]
-        internal Body Body { get; set; }
+        internal HomesDataBody Body { get; set; }
 
         [JsonProperty("status")]
         internal string Status { get; set; }
@@ -22,7 +22,7 @@ namespace Aark.Netatmo.SDK.Models
         internal long TimeServer { get; set; }
     }
 
-    internal partial class Body
+    internal partial class HomesDataBody
     {
         [JsonProperty("homes")]
         internal List<HomeData> Homes { get; set; }
@@ -236,35 +236,5 @@ namespace Aark.Netatmo.SDK.Models
                 new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
             },
         };
-    }
-
-    internal class ParseStringConverter : JsonConverter
-    {
-        public override bool CanConvert(Type t) => t == typeof(long) || t == typeof(long?);
-
-        public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
-        {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
-            if (Int64.TryParse(value, out long l))
-            {
-                return l;
-            }
-            throw new Exception("Cannot unmarshal type long");
-        }
-
-        public override void WriteJson(JsonWriter writer, object untypedValue, JsonSerializer serializer)
-        {
-            if (untypedValue == null)
-            {
-                serializer.Serialize(writer, null);
-                return;
-            }
-            var value = (long)untypedValue;
-            serializer.Serialize(writer, value.ToString());
-            return;
-        }
-
-        internal static readonly ParseStringConverter Singleton = new ParseStringConverter();
     }
 }
