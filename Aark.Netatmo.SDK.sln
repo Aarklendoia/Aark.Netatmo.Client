@@ -8,8 +8,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1FEE6CC3-CD89-487F-B819-9B71976F8D77}"
 	ProjectSection(SolutionItems) = preProject
 		azure-pipelines.yml = azure-pipelines.yml
+		CodeOfConduct.md = CodeOfConduct.md
+		License = License
 		Readme.md = Readme.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aark.Netatmo.SDK.Test", "Aark.Netatmo.SDK.Test\Aark.Netatmo.SDK.Test.csproj", "{26C726C6-0855-49D3-9CB4-86A337315E3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,10 @@ Global
 		{223DF48F-9CD0-4CA4-BDE5-ECE333B08D5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{223DF48F-9CD0-4CA4-BDE5-ECE333B08D5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{223DF48F-9CD0-4CA4-BDE5-ECE333B08D5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26C726C6-0855-49D3-9CB4-86A337315E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26C726C6-0855-49D3-9CB4-86A337315E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26C726C6-0855-49D3-9CB4-86A337315E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26C726C6-0855-49D3-9CB4-86A337315E3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

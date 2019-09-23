@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aark.Netatmo.SDK.Energy
+namespace Aark.Netatmo.SDK
 {
     /// <summary>
-    /// Outdoor Presence Camera of Netatmo.
+    /// Netatmo Security station.
     /// </summary>
-    public class PresenceCamera
+    public class SecurityStation
     {
     }
 }

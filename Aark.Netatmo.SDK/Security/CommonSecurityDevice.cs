@@ -1,14 +1,13 @@
-﻿using Aark.Netatmo.SDK.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aark.Netatmo.SDK.Energy
+namespace Aark.Netatmo.SDK.Security
 {
     /// <summary>
-    /// Common properties for an Energy device.
+    /// Common properties for a Security device.
     /// </summary>
-    public interface ICommonEnergyDevice
+    public interface ICommonSecurityDevice
     {
         /// <summary>
         /// Id of the device.

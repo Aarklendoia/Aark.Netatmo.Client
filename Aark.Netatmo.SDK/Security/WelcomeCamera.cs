@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aark.Netatmo.SDK.Energy
+namespace Aark.Netatmo.SDK.Security
 {
     /// <summary>
-    /// Thermostat of Netatmo.
+    /// Indoor Welcome Camera of Netatmo.
     /// </summary>
-    public class Thermostat : ICommonEnergyDevice
+    public class WelcomeCamera: ICommonSecurityDevice
     {
         /// <summary>
         /// Id of the device.
@@ -21,9 +21,5 @@ namespace Aark.Netatmo.SDK.Energy
         /// Date on which the device was setted. 
         /// </summary>
         public DateTime SetupDate { get; set; }
-        /// <summary>
-        /// Id of the room in which the thermostat is located.
-        /// </summary>
-        public long? RoomId { get; set; }
     }
 }

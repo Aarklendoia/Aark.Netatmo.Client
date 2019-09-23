@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aark.Netatmo.SDK.Energy
+namespace Aark.Netatmo.SDK.Security
 {
     /// <summary>
     /// Defines a person.

@@ -240,7 +240,7 @@
             }
         }
 
-        // TODO : harmoniser les états de réception
+        // TODO : harmonize the reception status
         internal static WifiStatus ToWifiStatus(this long value)
         {
             switch (value)

@@ -39,15 +39,11 @@ namespace Aark.Netatmo.SDK.Energy
         /// <summary>
         /// Timezone of th home.
         /// </summary>
-        public string TimeZone { get; internal set; } // TODO : convertir en fuseau horaire
+        public string TimeZone { get; internal set; } // TODO : convert to timezone
         /// <summary>
         /// Default duration of a manual setpoint.
         /// </summary>
         public long DefaultDurationSetpoint { get; private set; }
-        /// <summary>
-        /// Persons detected by the camera.
-        /// </summary>
-        public ObservableCollection<Person> Persons { get; private set; } = new ObservableCollection<Person>(); // TODO : séparer chauffe de surveillance.
         /// <summary>
         /// Thermostat operating mode.
         /// </summary>
@@ -65,6 +61,6 @@ namespace Aark.Netatmo.SDK.Energy
         /// </summary>
         public ObservableCollection<Room> Rooms { get; private set; }
 
-        // TODO : ajouter les modules
+        // TODO : add modules
     }
 }

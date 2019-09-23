@@ -54,22 +54,22 @@
             List of the connected valves.
             </summary>
         </member>
-        <member name="T:Aark.Netatmo.SDK.Energy.CommonEnergyDevice">
+        <member name="T:Aark.Netatmo.SDK.Energy.ICommonEnergyDevice">
             <summary>
             Common properties for an Energy device.
             </summary>
         </member>
-        <member name="P:Aark.Netatmo.SDK.Energy.CommonEnergyDevice.Id">
+        <member name="P:Aark.Netatmo.SDK.Energy.ICommonEnergyDevice.Id">
             <summary>
             Id of the device.
             </summary>
         </member>
-        <member name="P:Aark.Netatmo.SDK.Energy.CommonEnergyDevice.Name">
+        <member name="P:Aark.Netatmo.SDK.Energy.ICommonEnergyDevice.Name">
             <summary>
             Name of the device.
             </summary>
         </member>
-        <member name="P:Aark.Netatmo.SDK.Energy.CommonEnergyDevice.SetupDate">
+        <member name="P:Aark.Netatmo.SDK.Energy.ICommonEnergyDevice.SetupDate">
             <summary>
             Date on which the device was setted. 
             </summary>
@@ -77,6 +77,21 @@
         <member name="T:Aark.Netatmo.SDK.Energy.CommonEnergyRadioDevice">
             <summary>
             Common properties for a radio connected Energy device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.CommonEnergyRadioDevice.Id">
+            <summary>
+            Id of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.CommonEnergyRadioDevice.Name">
+            <summary>
+            Name of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.CommonEnergyRadioDevice.SetupDate">
+            <summary>
+            Date on which the device was setted. 
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Energy.CommonEnergyRadioDevice.Firmware">
@@ -144,11 +159,6 @@
             Default duration of a manual setpoint.
             </summary>
         </member>
-        <member name="P:Aark.Netatmo.SDK.Energy.Home.Persons">
-            <summary>
-            Persons detected by the camera.
-            </summary>
-        </member>
         <member name="P:Aark.Netatmo.SDK.Energy.Home.ThermostatMode">
             <summary>
             Thermostat operating mode.
@@ -169,34 +179,24 @@
             Rooms list.
             </summary>
         </member>
-        <member name="T:Aark.Netatmo.SDK.Energy.Person">
-            <summary>
-            Defines a person.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Energy.Person.Id">
-            <summary>
-            Id of the person.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Energy.Person.Pseudo">
-            <summary>
-            Pseudonymous of the person if identified.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Energy.Person.Url">
-            <summary>
-            Url of the image representing the person.
-            </summary>
-        </member>
-        <member name="T:Aark.Netatmo.SDK.Energy.PresenceCamera">
-            <summary>
-            Outdoor Presence Camera of Netatmo.
-            </summary>
-        </member>
         <member name="T:Aark.Netatmo.SDK.Energy.Relay">
             <summary>
             Thermostat relay of Netatmo.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.Relay.Id">
+            <summary>
+            Id of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.Relay.Name">
+            <summary>
+            Name of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.Relay.SetupDate">
+            <summary>
+            Date on which the device was setted. 
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Energy.Relay.Valves">
@@ -274,14 +274,24 @@
             List of heating values for the zone.
             </summary>
         </member>
-        <member name="T:Aark.Netatmo.SDK.Energy.SmokeDetector">
-            <summary>
-            Smoke dectector of Netatmo.
-            </summary>
-        </member>
         <member name="T:Aark.Netatmo.SDK.Energy.Thermostat">
             <summary>
             Thermostat of Netatmo.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.Thermostat.Id">
+            <summary>
+            Id of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.Thermostat.Name">
+            <summary>
+            Name of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Energy.Thermostat.SetupDate">
+            <summary>
+            Date on which the device was setted. 
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Energy.Thermostat.RoomId">
@@ -357,11 +367,6 @@
         <member name="P:Aark.Netatmo.SDK.Energy.Valve.RoomId">
             <summary>
             Id of the room in which the valve is located.
-            </summary>
-        </member>
-        <member name="T:Aark.Netatmo.SDK.Energy.WelcomeCamera">
-            <summary>
-            Indoor Welcome Camera of Netatmo.
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Energy.Zone">
@@ -1131,6 +1136,121 @@
             Loads all data related to the energy station.
             </summary>
             <returns>Return <see cref="T:System.Boolean">true</see> if the data has been correctly loaded.</returns>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.SecurityStation">
+            <summary>
+            Netatmo Security station.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.ICommonSecurityDevice">
+            <summary>
+            Common properties for a Security device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.ICommonSecurityDevice.Id">
+            <summary>
+            Id of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.ICommonSecurityDevice.Name">
+            <summary>
+            Name of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.ICommonSecurityDevice.SetupDate">
+            <summary>
+            Date on which the device was setted. 
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.Home">
+            <summary>
+            A Home contains Persons, Place, Cameras, Smoke detectors and Events.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Home.Persons">
+            <summary>
+            Persons detected by the camera.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.Person">
+            <summary>
+            Defines a person.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Person.Id">
+            <summary>
+            Id of the person.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Person.Pseudo">
+            <summary>
+            Pseudonymous of the person if identified.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Person.Url">
+            <summary>
+            Url of the image representing the person.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.PresenceCamera">
+            <summary>
+            Outdoor Presence Camera of Netatmo.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.PresenceCamera.Id">
+            <summary>
+            Id of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.PresenceCamera.Name">
+            <summary>
+            Name of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.PresenceCamera.SetupDate">
+            <summary>
+            Date on which the device was setted. 
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.SmokeDetector">
+            <summary>
+            Smoke dectector of Netatmo.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SmokeDetector.Id">
+            <summary>
+            Id of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SmokeDetector.Name">
+            <summary>
+            Name of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SmokeDetector.SetupDate">
+            <summary>
+            Date on which the device was setted. 
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.WelcomeCamera">
+            <summary>
+            Indoor Welcome Camera of Netatmo.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.WelcomeCamera.Id">
+            <summary>
+            Id of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.WelcomeCamera.Name">
+            <summary>
+            Name of the device.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.WelcomeCamera.SetupDate">
+            <summary>
+            Date on which the device was setted. 
+            </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.WeatherStation">
             <summary>
