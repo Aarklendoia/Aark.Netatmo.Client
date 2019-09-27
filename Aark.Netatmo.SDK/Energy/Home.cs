@@ -13,11 +13,11 @@ namespace Aark.Netatmo.SDK.Energy
     public abstract class Home
     {
         /// <summary>
-        /// id of the home.
+        /// Id of the home.
         /// </summary>
         public string Id { get; private set; }
         /// <summary>
-        /// name of the home.
+        /// Name of the home.
         /// </summary>
         public string Name { get; private set; }
         /// <summary>

@@ -121,12 +121,12 @@
         </member>
         <member name="P:Aark.Netatmo.SDK.Energy.Home.Id">
             <summary>
-            id of the home.
+            Id of the home.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Energy.Home.Name">
             <summary>
-            name of the home.
+            Name of the home.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Energy.Home.Altitude">
@@ -1165,6 +1165,16 @@
         <member name="T:Aark.Netatmo.SDK.Security.Home">
             <summary>
             A Home contains Persons, Place, Cameras, Smoke detectors and Events.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Home.Id">
+            <summary>
+            id of the home.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Home.Name">
+            <summary>
+            name of the home.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Home.Persons">
