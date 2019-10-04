@@ -9,7 +9,7 @@ namespace Aark.Netatmo.SDK
     /// </summary>
     public class NetatmoManager
     {
-        private APICommands _APICommands;
+        private readonly APICommands _APICommands;
 
         /// <summary>
         /// Weather station.

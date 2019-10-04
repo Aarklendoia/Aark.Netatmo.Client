@@ -6,7 +6,6 @@ using Newtonsoft.Json.Converters;
 
 namespace Aark.Netatmo.SDK.Models
 {
-
     internal partial class HomesData
     {
         [JsonProperty("body")]

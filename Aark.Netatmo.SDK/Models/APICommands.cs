@@ -169,9 +169,10 @@ namespace Aark.Netatmo.SDK.Models
                 }
                 return measuresData;
             }
-        } 
+        }
         #endregion
 
+        #region EnergyStation
         internal async Task<HomesData> GetHomesData()
         {
             if (!await CheckConnectionAsync())
@@ -198,5 +199,72 @@ namespace Aark.Netatmo.SDK.Models
                 return homesData;
             }
         }
+
+        internal async Task<HomeStatus> GetHomeStatus(string homeId)
+        {
+            if (!await CheckConnectionAsync())
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["home_id"] = homeId;
+            parameters["device_types"] = ""; // array of device types
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/homestatus");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                HomeStatus homeStatus = HomeStatus.FromJson(responseBody);
+                if (homeStatus.Body == null)
+                {
+                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    _errorMessage = errorMeasuresData.Error.Message;
+                    return null;
+                }
+                return homeStatus;
+            }
+        }
+
+        internal async Task<RoomMeasures> GetRoomMeasures(string homeId, string roomId, MeasureScale scale, MeasuresFilters measureType, DateTime? dateBegin, DateTime? dateEnd, int limit = 1024)
+        {
+            if (!await CheckConnectionAsync())
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["home_id"] = homeId;
+            parameters["room_id"] = roomId;
+            parameters["scale"] = scale.ToJsonString();
+            parameters["type"] = measureType.ToJsonString();
+            if (dateBegin != null)
+                parameters["date_begin"] = dateBegin.FromLocalDateTime().ToString();
+            if (dateEnd != null)
+                parameters["date_end"] = dateEnd.FromLocalDateTime().ToString();
+            parameters["optimize"] = true.ToString().ToLower();
+            parameters["limit"] = limit.ToString();
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/getroommeasure");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request);
+                string responseBody = await response.Content.ReadAsStringAsync();
+                RoomMeasures roomMeasures = RoomMeasures.FromJson(responseBody);
+                if (roomMeasures.Body == null)
+                {
+                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    _errorMessage = errorMeasuresData.Error.Message;
+                    return null;
+                }
+                return roomMeasures;
+            }
+        }
+        #endregion
     }
 }
