@@ -3,7 +3,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Aark.Netatmo.SDK.Models
+namespace Aark.Netatmo.SDK.Models.Energy
 {
     internal partial class RoomMeasures
     {

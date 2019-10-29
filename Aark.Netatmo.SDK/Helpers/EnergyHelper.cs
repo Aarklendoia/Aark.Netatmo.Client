@@ -192,6 +192,26 @@
         }
 
         /// <summary>
+        /// Convert <paramref name="value"/> to a <see cref="string"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>The <see cref="string"/> corresponding to the input <paramref name="value"/></returns>
+        public static string FromThermostatMode(this ThermostatMode value)
+        {
+            switch (value)
+            {
+                case ThermostatMode.Schedule:
+                    return "schedule";
+                case ThermostatMode.Away:
+                    return "away";
+                case ThermostatMode.FrostGuard:
+                    return "hg";
+                default:
+                    return "schedule";
+            }
+        }
+
+        /// <summary>
         /// Convert a <paramref name="value"/> to a <see cref="ZoneType"/>
         /// </summary>
         /// <param name="value"></param>

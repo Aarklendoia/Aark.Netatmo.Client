@@ -5,6 +5,11 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Globalization;
+using Aark.Netatmo.SDK.Models.Common;
+using Aark.Netatmo.SDK.Models.Weather;
+using Aark.Netatmo.SDK.Models.Security;
+using Aark.Netatmo.SDK.Models.Energy;
 
 namespace Aark.Netatmo.SDK.Models
 {
@@ -15,9 +20,9 @@ namespace Aark.Netatmo.SDK.Models
         private string _resfreshToken = "";
         private string _errorMessage = "";
 
-        private static readonly string host = "https://api.netatmo.com";
-        private static readonly string authPath = "/oauth2/token";
-        private static readonly string apiPath = "/api";
+        private const string host = "https://api.netatmo.com";
+        private const string authPath = "/oauth2/token";
+        private const string apiPath = "/api";
 
         internal string ApplicationId { get; set; }
         internal string ApplicationSecret { get; set; }
@@ -33,7 +38,7 @@ namespace Aark.Netatmo.SDK.Models
         #region Authentification
         private async Task<bool> AuthentificationAsync()
         {
-            if (Username == "" || Password == "")
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Password))
                 return false;
 
             var parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -50,9 +55,9 @@ namespace Aark.Netatmo.SDK.Models
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(host + authPath);
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await client.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
-                AccessData accessData = AccessData.FromJson(responseBody);
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                AccessData accessData = new AccessData().FromJson(responseBody);
                 _accessToken = accessData.AccessToken;
                 _expireAt = DateTime.Now.AddSeconds(accessData.ExpiresIn);
                 _resfreshToken = accessData.RefreshToken;
@@ -80,9 +85,9 @@ namespace Aark.Netatmo.SDK.Models
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(host + authPath);
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await client.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
-                AccessData accessData = AccessData.FromJson(responseBody);
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                AccessData accessData = new AccessData().FromJson(responseBody);
                 _accessToken = accessData.AccessToken;
                 _expireAt = DateTime.Now.AddSeconds(accessData.ExpiresIn);
                 _resfreshToken = accessData.RefreshToken;
@@ -93,11 +98,11 @@ namespace Aark.Netatmo.SDK.Models
         private async Task<bool> CheckConnectionAsync()
         {
             if (_accessToken.Length == 0)
-                return await AuthentificationAsync();
+                return await AuthentificationAsync().ConfigureAwait(false);
             else
             {
                 if (DateTime.Now.CompareTo(_expireAt) > 0)
-                    return await ResfreshAuthentificationAsync();
+                    return await ResfreshAuthentificationAsync().ConfigureAwait(false);
                 else
                     return true;
             }
@@ -107,13 +112,13 @@ namespace Aark.Netatmo.SDK.Models
         #region WeatherStation
         internal async Task<StationData> GetStationsData(string deviceId = "", bool favorite = false)
         {
-            if (!await CheckConnectionAsync())
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["access_token"] = _accessToken;
             if (deviceId.Length > 0)
                 parameters["device_id"] = deviceId;
-            parameters["get_favorites"] = favorite.ToString();
+            parameters["get_favorites"] = favorite.ToString(CultureInfo.InvariantCulture);
 
             using (HttpClient client = new HttpClient())
             using (HttpRequestMessage request = new HttpRequestMessage())
@@ -121,8 +126,8 @@ namespace Aark.Netatmo.SDK.Models
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(host + apiPath + "/getstationsdata");
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await client.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 StationData stationData = StationData.FromJson(responseBody);
                 if (stationData.Body == null)
                 {
@@ -136,7 +141,7 @@ namespace Aark.Netatmo.SDK.Models
 
         internal async Task<MeasuresData> GetMeasure(string deviceId, MeasureScale scale, MeasuresFilters measureType, DateTime? dateBegin, DateTime? dateEnd, string moduleId = "", int limit = 1024)
         {
-            if (!await CheckConnectionAsync())
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["access_token"] = _accessToken;
@@ -144,11 +149,11 @@ namespace Aark.Netatmo.SDK.Models
             parameters["scale"] = scale.ToJsonString();
             parameters["type"] = measureType.ToJsonString();
             if (dateBegin != null)
-                parameters["date_begin"] = dateBegin.FromLocalDateTime().ToString();
+                parameters["date_begin"] = dateBegin.FromLocalDateTime().ToString(CultureInfo.InvariantCulture);
             if (dateEnd != null)
-                parameters["date_end"] = dateEnd.FromLocalDateTime().ToString();
-            parameters["optimize"] = true.ToString().ToLower();
-            parameters["limit"] = limit.ToString();
+                parameters["date_end"] = dateEnd.FromLocalDateTime().ToString(CultureInfo.InvariantCulture);
+            parameters["optimize"] = true.ToString(CultureInfo.InvariantCulture).ToUpperInvariant();
+            parameters["limit"] = limit.ToString(CultureInfo.InvariantCulture);
             if (moduleId.Length > 0)
                 parameters["module_id"] = moduleId;
 
@@ -158,8 +163,8 @@ namespace Aark.Netatmo.SDK.Models
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(host + apiPath + "/getmeasure");
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await client.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 MeasuresData measuresData = MeasuresData.FromJson(responseBody);
                 if (measuresData.Body == null)
                 {
@@ -175,7 +180,7 @@ namespace Aark.Netatmo.SDK.Models
         #region EnergyStation
         internal async Task<HomesData> GetHomesData()
         {
-            if (!await CheckConnectionAsync())
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
 
@@ -187,8 +192,8 @@ namespace Aark.Netatmo.SDK.Models
 
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await client.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 HomesData homesData = HomesData.FromJson(responseBody);
                 if (homesData.Body == null)
                 {
@@ -202,7 +207,7 @@ namespace Aark.Netatmo.SDK.Models
 
         internal async Task<HomeStatus> GetHomeStatus(string homeId)
         {
-            if (!await CheckConnectionAsync())
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["home_id"] = homeId;
@@ -216,8 +221,8 @@ namespace Aark.Netatmo.SDK.Models
 
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await client.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 HomeStatus homeStatus = HomeStatus.FromJson(responseBody);
                 if (homeStatus.Body == null)
                 {
@@ -231,7 +236,7 @@ namespace Aark.Netatmo.SDK.Models
 
         internal async Task<RoomMeasures> GetRoomMeasures(string homeId, string roomId, MeasureScale scale, MeasuresFilters measureType, DateTime? dateBegin, DateTime? dateEnd, int limit = 1024)
         {
-            if (!await CheckConnectionAsync())
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["home_id"] = homeId;
@@ -239,11 +244,11 @@ namespace Aark.Netatmo.SDK.Models
             parameters["scale"] = scale.ToJsonString();
             parameters["type"] = measureType.ToJsonString();
             if (dateBegin != null)
-                parameters["date_begin"] = dateBegin.FromLocalDateTime().ToString();
+                parameters["date_begin"] = dateBegin.FromLocalDateTime().ToString(CultureInfo.InvariantCulture);
             if (dateEnd != null)
-                parameters["date_end"] = dateEnd.FromLocalDateTime().ToString();
-            parameters["optimize"] = true.ToString().ToLower();
-            parameters["limit"] = limit.ToString();
+                parameters["date_end"] = dateEnd.FromLocalDateTime().ToString(CultureInfo.InvariantCulture);
+            parameters["optimize"] = true.ToString(CultureInfo.InvariantCulture).ToUpperInvariant();
+            parameters["limit"] = limit.ToString(CultureInfo.InvariantCulture);
 
             using (HttpClient client = new HttpClient())
             using (HttpRequestMessage request = new HttpRequestMessage())
@@ -253,8 +258,8 @@ namespace Aark.Netatmo.SDK.Models
 
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await client.SendAsync(request);
-                string responseBody = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 RoomMeasures roomMeasures = RoomMeasures.FromJson(responseBody);
                 if (roomMeasures.Body == null)
                 {
@@ -263,6 +268,67 @@ namespace Aark.Netatmo.SDK.Models
                     return null;
                 }
                 return roomMeasures;
+            }
+        }
+
+        internal async Task<SimpleAnswer> SetThermMod(string homeId, ThermostatMode thermalMode, DateTime endTime)
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["home_id"] = homeId;
+            parameters["mode"] = thermalMode.FromThermostatMode();
+            parameters["endtime"] = endTime.FromLocalDateTime().ToString(CultureInfo.InvariantCulture);
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/setthermmode");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                SimpleAnswer simpleAnswer = SimpleAnswer.FromJson(responseBody);
+                if (simpleAnswer.Status == null)
+                {
+                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    _errorMessage = errorMeasuresData.Error.Message;
+                    return null;
+                }
+                return simpleAnswer;
+            }
+        }
+        #endregion
+
+        #region SecurityStation
+        internal async Task<Security.HomeData> GetHomeData(string homeId = "", int size = 30)
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["home_id"] = homeId;
+            parameters["size"] = size.ToString(CultureInfo.InvariantCulture);
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/gethomedata");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                Aark.Netatmo.SDK.Models.Security.HomeData homeData = Aark.Netatmo.SDK.Models.Security.HomeData.FromJson(responseBody);
+                if (homeData.Body == null)
+                {
+                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    _errorMessage = errorMeasuresData.Error.Message;
+                    return null;
+                }
+                return homeData;
             }
         }
         #endregion

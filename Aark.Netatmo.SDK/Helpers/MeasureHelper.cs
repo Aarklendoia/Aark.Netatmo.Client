@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Reflection;
+using System.Resources;
 
 namespace Aark.Netatmo.SDK.Helpers
 {
@@ -150,7 +153,9 @@ namespace Aark.Netatmo.SDK.Helpers
 
     internal static class MeasureHelper
     {
-        internal static readonly MeasuresFilters MaxFilters =
+        private static readonly ResourceManager stringManager = new ResourceManager("en-US", Assembly.GetExecutingAssembly());
+
+        internal const MeasuresFilters MaxFilters =
             MeasuresFilters.Temperature |
             MeasuresFilters.Co2 |
             MeasuresFilters.Humidity |
@@ -162,7 +167,7 @@ namespace Aark.Netatmo.SDK.Helpers
             MeasuresFilters.GustStrength |
             MeasuresFilters.GustAngle;
 
-        internal static readonly MeasuresFilters ShortScaleFilters = MaxFilters |
+        internal const MeasuresFilters ShortScaleFilters = MaxFilters |
              MeasuresFilters.MinTemperature |
             MeasuresFilters.MaxTemperature |
             MeasuresFilters.MinHumidity |
@@ -173,7 +178,7 @@ namespace Aark.Netatmo.SDK.Helpers
             MeasuresFilters.MaxNoise |
             MeasuresFilters.SumRain;
 
-        internal static readonly MeasuresFilters LargeScaleFilters = ShortScaleFilters |
+        internal const MeasuresFilters LargeScaleFilters = ShortScaleFilters |
             MeasuresFilters.DateMaxHumidity |
             MeasuresFilters.DateMinPressure |
             MeasuresFilters.DateMaxPressure |
@@ -202,7 +207,7 @@ namespace Aark.Netatmo.SDK.Helpers
                 case MeasureScale.ThreeHours:
                     return "3hours";
                 default:
-                    throw new ArgumentException("Invalide value for MeasureScale", "value");
+                    throw new ArgumentException(stringManager.GetString("invalideValueForMeasureScale", CultureInfo.CurrentUICulture), nameof(value));
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
+using Aark.Netatmo.SDK.Models.Weather;
 using Aark.Netatmo.SDK.Weather;
 using System;
 using System.Collections.ObjectModel;
@@ -63,7 +64,7 @@ namespace Aark.Netatmo.SDK
         {
             if (_lastRefresh.AddMinutes(10).CompareTo(DateTime.Now) > 0)
                 return true;
-            var stationData = await _aPICommands.GetStationsData();
+            var stationData = await _aPICommands.GetStationsData().ConfigureAwait(false);
             if (stationData == null)
                 return false;
             _lastRefresh = DateTime.Now;

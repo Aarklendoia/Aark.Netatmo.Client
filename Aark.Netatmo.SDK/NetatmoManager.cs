@@ -35,7 +35,7 @@ namespace Aark.Netatmo.SDK
                 ApplicationSecret = applicationSecret,
                 Username = username,
                 Password = password,
-                Scope = "read_station read_thermostat write_thermostat"
+                Scope = "read_station read_thermostat write_thermostat read_camera write_camera access_camera read_presence access_presence read_homecoach"
             };
             WeatherStation = new WeatherStation(_APICommands);
             EnergyStation = new EnergyStation(_APICommands);
@@ -56,7 +56,7 @@ namespace Aark.Netatmo.SDK
         /// <returns>Return <see cref="bool">true</see> if the data has been correctly loaded.</returns>
         public async Task<bool> LoadWeatherDataAsync()
         {
-            return await WeatherStation.LoadDataAsync();
+            return await WeatherStation.LoadDataAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Aark.Netatmo.SDK
         /// <returns>Return <see cref="bool">true</see> if the data has been correctly loaded.</returns>
         public async Task<bool> LoadEnergyDataAsync()
         {
-            return await EnergyStation.LoadDataAsync();
+            return await EnergyStation.LoadDataAsync().ConfigureAwait(false);
         }
     }
 }

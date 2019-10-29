@@ -1,5 +1,6 @@
 ﻿using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
+using Aark.Netatmo.SDK.Models.Weather;
 using System;
 
 namespace Aark.Netatmo.SDK.Weather

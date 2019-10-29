@@ -1,6 +1,7 @@
 ﻿using Aark.Netatmo.SDK.Energy;
 using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
+using Aark.Netatmo.SDK.Models.Energy;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -60,7 +61,7 @@ namespace Aark.Netatmo.SDK
 
         internal async Task<bool> LoadDataAsync()
         {
-            var homesData = await _aPICommands.GetHomesData();
+            var homesData = await _aPICommands.GetHomesData().ConfigureAwait(false);
             if (homesData == null)
                 return false;
             Mail = homesData.Body.User.Email;

@@ -1,5 +1,6 @@
 ﻿using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
+using Aark.Netatmo.SDK.Models.Weather;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -102,7 +103,7 @@ namespace Aark.Netatmo.SDK.Weather
         {
             _valueIndex = 0;
             MeasureScale measureScale = GetScaleFromDateRange(_dateBegin, _dateEnd);
-            _measuresData = await _aPICommands.GetMeasure(BaseId, measureScale, measuresFilters, _dateBegin, _dateEnd, Id);
+            _measuresData = await _aPICommands.GetMeasure(BaseId, measureScale, measuresFilters, _dateBegin, _dateEnd, Id).ConfigureAwait(false);
             if (_measuresData == null)
                 return;
             // Wind

@@ -611,6 +611,13 @@
             <param name="value"></param>
             <returns>The <see cref="T:Aark.Netatmo.SDK.Helpers.ThermostatMode"/> corresponding to the input <paramref name="value"/></returns>
         </member>
+        <member name="M:Aark.Netatmo.SDK.Helpers.EnergyHelper.FromThermostatMode(Aark.Netatmo.SDK.Helpers.ThermostatMode)">
+            <summary>
+            Convert <paramref name="value"/> to a <see cref="T:System.String"/>
+            </summary>
+            <param name="value"></param>
+            <returns>The <see cref="T:System.String"/> corresponding to the input <paramref name="value"/></returns>
+        </member>
         <member name="M:Aark.Netatmo.SDK.Helpers.EnergyHelper.ToZoneType(System.Int64)">
             <summary>
             Convert a <paramref name="value"/> to a <see cref="T:Aark.Netatmo.SDK.Helpers.ZoneType"/>
