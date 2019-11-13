@@ -4,32 +4,26 @@ using Newtonsoft.Json.Converters;
 
 namespace Aark.Netatmo.SDK.Models.Common
 {
-    internal partial class ErrorData
+    internal class ErrorData
     {
         [JsonProperty("error")]
         internal string Error { get; set; }
-    }
 
-    internal partial class ErrorData
-    {
-        internal static ErrorData FromJson(string json) => JsonConvert.DeserializeObject<ErrorData>(json, ErrorDataConverter.Settings);
-    }
+        private readonly JsonSerializerSettings Settings;
 
-    internal static class ErrorDataSerialize
-    {
-        internal static string ToJson(this ErrorData self) => JsonConvert.SerializeObject(self, ErrorDataConverter.Settings);
-    }
-
-    internal static class ErrorDataConverter
-    {
-        internal static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        public ErrorData()
         {
-            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            DateParseHandling = DateParseHandling.None,
-            Converters =
+            Settings = new JsonSerializerSettings
             {
-                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-            },
-        };
+                MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                DateParseHandling = DateParseHandling.None,
+                Converters =
+                {
+                    new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+                },
+            };
+        }
+
+        internal ErrorData FromJson(string json) => JsonConvert.DeserializeObject<ErrorData>(json, Settings);
     }
 }

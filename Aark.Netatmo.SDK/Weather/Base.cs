@@ -169,7 +169,7 @@ namespace Aark.Netatmo.SDK.Weather
 
         }
 
-        internal void Load(Device device)
+        internal void Load(StationData.Device device)
         {
             Id = device.Id;
             DateSetup = device.DateSetup.ToLocalDateTime();

@@ -5,10 +5,22 @@ using Newtonsoft.Json.Converters;
 
 namespace Aark.Netatmo.SDK.Models.Energy
 {
-    internal partial class RoomMeasures
+    internal class RoomMeasures
     {
+        internal struct BodyRoomMeasures
+        {
+            [JsonProperty("beg_time")]
+            internal long BegTime { get; set; }
+
+            [JsonProperty("step_time")]
+            internal long StepTime { get; set; }
+
+            [JsonProperty("value")]
+            internal List<List<double>> Value { get; set; }
+        }
+
         [JsonProperty("body")]
-        internal List<Body> Body { get; set; }
+        internal List<BodyRoomMeasures> Body { get; set; }
 
         [JsonProperty("status")]
         internal string Status { get; set; }
@@ -18,40 +30,22 @@ namespace Aark.Netatmo.SDK.Models.Energy
 
         [JsonProperty("time_server")]
         internal long TimeServer { get; set; }
-    }
 
-    internal partial class Body
-    {
-        [JsonProperty("beg_time")]
-        internal long BegTime { get; set; }
+        private readonly JsonSerializerSettings Settings;
 
-        [JsonProperty("step_time")]
-        internal long StepTime { get; set; }
-
-        [JsonProperty("value")]
-        internal List<List<double>> Value { get; set; }
-    }
-
-    internal partial class RoomMeasures
-    {
-        internal static RoomMeasures FromJson(string json) => JsonConvert.DeserializeObject<RoomMeasures>(json, RoomMeasuresConverter.Settings);
-    }
-
-    internal static class RoomMeasuresSerialize
-    {
-        internal static string ToJson(this RoomMeasures self) => JsonConvert.SerializeObject(self, RoomMeasuresConverter.Settings);
-    }
-
-    internal static class RoomMeasuresConverter
-    {
-        internal static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        public RoomMeasures()
         {
-            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            DateParseHandling = DateParseHandling.None,
-            Converters =
+            Settings = new JsonSerializerSettings
             {
-                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-            },
-        };
+                MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                DateParseHandling = DateParseHandling.None,
+                Converters =
+                {
+                    new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+                },
+            };
+        }
+
+        internal RoomMeasures FromJson(string json) => JsonConvert.DeserializeObject<RoomMeasures>(json, Settings);
     }
 }

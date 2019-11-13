@@ -86,7 +86,7 @@ namespace Aark.Netatmo.SDK.Weather
 
         }
 
-        internal override void Load(WeatherModule weatherModule, string baseId)
+        internal override void Load(StationData.WeatherModule weatherModule, string baseId)
         {
             Available = true;
             BaseId = baseId;

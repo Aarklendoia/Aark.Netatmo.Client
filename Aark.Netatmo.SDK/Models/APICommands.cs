@@ -63,7 +63,7 @@ namespace Aark.Netatmo.SDK.Models
                 _resfreshToken = accessData.RefreshToken;
                 if (_accessToken == null)
                 {
-                    ErrorData _errorData = ErrorData.FromJson(responseBody);
+                    ErrorData _errorData = new ErrorData().FromJson(responseBody);
                     _errorMessage = _errorData.Error;
                     return false;
                 }
@@ -128,10 +128,10 @@ namespace Aark.Netatmo.SDK.Models
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                StationData stationData = StationData.FromJson(responseBody);
-                if (stationData.Body == null)
+                StationData stationData = new StationData().FromJson(responseBody);
+                if (stationData.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
                     _errorMessage = errorMeasuresData.Error.Message;
                     return null;
                 }
@@ -165,10 +165,10 @@ namespace Aark.Netatmo.SDK.Models
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                MeasuresData measuresData = MeasuresData.FromJson(responseBody);
-                if (measuresData.Body == null)
+                MeasuresData measuresData = new MeasuresData().FromJson(responseBody);
+                if (measuresData.Content == null)
                 {
-                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
                     _errorMessage = errorMeasuresData.Error.Message;
                     return null;
                 }
@@ -194,10 +194,10 @@ namespace Aark.Netatmo.SDK.Models
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                HomesData homesData = HomesData.FromJson(responseBody);
-                if (homesData.Body == null)
+                HomesData homesData = new HomesData().FromJson(responseBody);
+                if (homesData.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
                     _errorMessage = errorMeasuresData.Error.Message;
                     return null;
                 }
@@ -223,10 +223,10 @@ namespace Aark.Netatmo.SDK.Models
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                HomeStatus homeStatus = HomeStatus.FromJson(responseBody);
-                if (homeStatus.Body == null)
+                HomeStatus homeStatus = new HomeStatus().FromJson(responseBody);
+                if (homeStatus.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
                     _errorMessage = errorMeasuresData.Error.Message;
                     return null;
                 }
@@ -260,10 +260,10 @@ namespace Aark.Netatmo.SDK.Models
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                RoomMeasures roomMeasures = RoomMeasures.FromJson(responseBody);
+                RoomMeasures roomMeasures = new RoomMeasures().FromJson(responseBody);
                 if (roomMeasures.Body == null)
                 {
-                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
                     _errorMessage = errorMeasuresData.Error.Message;
                     return null;
                 }
@@ -290,10 +290,10 @@ namespace Aark.Netatmo.SDK.Models
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                SimpleAnswer simpleAnswer = SimpleAnswer.FromJson(responseBody);
+                SimpleAnswer simpleAnswer = new SimpleAnswer().FromJson(responseBody);
                 if (simpleAnswer.Status == null)
                 {
-                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
                     _errorMessage = errorMeasuresData.Error.Message;
                     return null;
                 }
@@ -321,10 +321,10 @@ namespace Aark.Netatmo.SDK.Models
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
                 HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                Aark.Netatmo.SDK.Models.Security.HomeData homeData = Aark.Netatmo.SDK.Models.Security.HomeData.FromJson(responseBody);
-                if (homeData.Body == null)
+                HomeData homeData = new HomeData().FromJson(responseBody);
+                if (homeData.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = ErrorMeasuresData.FromJson(responseBody);
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
                     _errorMessage = errorMeasuresData.Error.Message;
                     return null;
                 }

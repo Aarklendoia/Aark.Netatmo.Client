@@ -75,7 +75,7 @@ namespace Aark.Netatmo.SDK.Weather
         internal int LoadData(MeasuresData measuresData, ObservableCollection<Measure> measures)
         {
             measures.Clear();
-            foreach (StationDataBody body in measuresData.Body)
+            foreach (MeasuresData.Body body in measuresData.Content)
             {
                 int valueIndex = 0;
                 foreach (List<double?> value in body.Value)

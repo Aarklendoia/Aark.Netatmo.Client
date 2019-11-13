@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Aark.Netatmo.SDK.Models.Energy
 {
-    internal partial class SimpleAnswer
+    internal class SimpleAnswer
     {
         [JsonProperty("status")]
         internal string Status { get; set; }
@@ -14,28 +14,22 @@ namespace Aark.Netatmo.SDK.Models.Energy
 
         [JsonProperty("time_server")]
         internal long TimeServer { get; set; }
-    }
 
-    internal partial class SimpleAnswer
-    {
-        internal static SimpleAnswer FromJson(string json) => JsonConvert.DeserializeObject<SimpleAnswer>(json, SimpleAnswerConverter.Settings);
-    }
+        private readonly JsonSerializerSettings Settings;
 
-    internal static class SimpleAnswerSerialize
-    {
-        internal static string ToJson(this SimpleAnswer self) => JsonConvert.SerializeObject(self, SimpleAnswerConverter.Settings);
-    }
-
-    internal static class SimpleAnswerConverter
-    {
-        internal static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        public SimpleAnswer()
         {
-            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            DateParseHandling = DateParseHandling.None,
-            Converters =
+            Settings = new JsonSerializerSettings
             {
-                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-            },
-        };
+                MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                DateParseHandling = DateParseHandling.None,
+                Converters =
+                {
+                    new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+                },
+            };
+        }
+
+        internal SimpleAnswer FromJson(string json) => JsonConvert.DeserializeObject<SimpleAnswer>(json, Settings);
     }
 }

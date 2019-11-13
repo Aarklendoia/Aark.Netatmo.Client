@@ -76,7 +76,7 @@ namespace Aark.Netatmo.SDK
             WindUnit = stationData.Body.User.Administrative.Windunit.ToWindUnit();
             PressureUnit = stationData.Body.User.Administrative.Pressureunit.ToPressureUnit();
             FeelLikeTemperature = stationData.Body.User.Administrative.FeelLikeAlgo.ToFeelLikeAlgo();
-            foreach (Device device in stationData.Body.Devices)
+            foreach (StationData.Device device in stationData.Body.Devices)
             {
                 WeatherDevice weatherDevice = new WeatherDevice(_aPICommands)
                 {
@@ -91,7 +91,7 @@ namespace Aark.Netatmo.SDK
                     }
                 };
                 weatherDevice.Base.Load(device);
-                foreach (WeatherModule module in device.Modules)
+                foreach (StationData.WeatherModule module in device.Modules)
                 {
                     switch (module.Type.ToModuleType())
                     {

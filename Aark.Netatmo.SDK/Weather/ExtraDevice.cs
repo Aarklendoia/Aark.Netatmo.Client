@@ -41,6 +41,6 @@ namespace Aark.Netatmo.SDK.Weather
 
         }
 
-        internal abstract void Load(WeatherModule weatherModule, string baseId);
+        internal abstract void Load(StationData.WeatherModule weatherModule, string baseId);
     }
 }

@@ -71,12 +71,12 @@ namespace Aark.Netatmo.SDK
             WindUnit = homesData.Body.User.UnitWind.ToWindUnit();
             PressureUnit = homesData.Body.User.UnitPressure.ToPressureUnit();
             FeelLikeTemperature = homesData.Body.User.FeelLikeAlgorithm.ToFeelLikeAlgo();
-            foreach (HomeData home in homesData.Body.Homes)
+            foreach (HomesData.HomeData home in homesData.Body.Homes)
             {
                 EnergyDevice energyDevice = new EnergyDevice(_aPICommands);
 
                 // Search for relays.
-                foreach (HomesModule module in home.Modules)
+                foreach (HomesData.HomesModule module in home.Modules)
                 {
                     if (module.Type.ToModuleType() == ModuleType.Relay)
                     {
@@ -87,7 +87,7 @@ namespace Aark.Netatmo.SDK
                     }
                 }
                 // Search for thermostats and valves.
-                foreach (HomesModule module in home.Modules)
+                foreach (HomesData.HomesModule module in home.Modules)
                 {
                     switch (module.Type.ToModuleType())
                     {

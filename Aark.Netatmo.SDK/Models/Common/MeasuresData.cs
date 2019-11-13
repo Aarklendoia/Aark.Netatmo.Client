@@ -5,10 +5,22 @@ using Newtonsoft.Json.Converters;
 
 namespace Aark.Netatmo.SDK.Models.Common
 {
-    internal partial class MeasuresData
+    internal class MeasuresData
     {
+        internal struct Body
+        {
+            [JsonProperty("beg_time")]
+            internal long BegTime { get; set; }
+
+            [JsonProperty("step_time")]
+            internal long StepTime { get; set; }
+
+            [JsonProperty("value")]
+            internal List<List<double?>> Value { get; set; }
+        }
+
         [JsonProperty("body")]
-        internal List<StationDataBody> Body { get; set; }
+        internal List<Body> Content { get; set; }
 
         [JsonProperty("status")]
         internal string Status { get; set; }
@@ -18,41 +30,26 @@ namespace Aark.Netatmo.SDK.Models.Common
 
         [JsonProperty("time_server")]
         internal long TimeServer { get; set; }
-    }
 
-    internal partial class StationDataBody
-    {
-        [JsonProperty("beg_time")]
-        internal long BegTime { get; set; }
+        private readonly JsonSerializerSettings Settings;
 
-        [JsonProperty("step_time")]
-        internal long StepTime { get; set; }
-
-        [JsonProperty("value")]
-        internal List<List<double?>> Value { get; set; }
-    }
-
-    internal partial class MeasuresData
-    {
-        internal static MeasuresData FromJson(string json) => JsonConvert.DeserializeObject<MeasuresData>(json, MeasuresDataConverter.Settings);
-    }
-
-    internal static class MeasuresDataSerialize
-    {
-        internal static string ToJson(this MeasuresData self) => JsonConvert.SerializeObject(self, MeasuresDataConverter.Settings);
-    }
-
-    internal static class MeasuresDataConverter
-    {
-        internal static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        public MeasuresData()
         {
-            MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-            DateParseHandling = DateParseHandling.None,
-            Converters =
+            Settings = new JsonSerializerSettings
             {
-                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
-            },
-        };
+                MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
+                DateParseHandling = DateParseHandling.None,
+                Converters =
+                {
+                    new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+                },
+            };
+        }
+
+        internal MeasuresData FromJson(string json)
+        {
+            return JsonConvert.DeserializeObject<MeasuresData>(json, Settings);
+        }
     }
 }
 
