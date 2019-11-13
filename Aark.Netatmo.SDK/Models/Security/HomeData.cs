@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
@@ -27,6 +28,21 @@ namespace Aark.Netatmo.SDK.Models.Security
             internal bool ShowTags { get; set; }
         }
 
+        internal struct SmokeDetector
+        {
+            [JsonProperty("id")]
+            internal string Id { get; set; }
+
+            [JsonProperty("type")]
+            internal string Type { get; set; }
+
+            [JsonProperty("last_setup")]
+            internal long LastSetup { get; set; }
+
+            [JsonProperty("name")]
+            internal string Name { get; set; }
+        }
+
         internal struct Home
         {
             [JsonProperty("id")]
@@ -35,20 +51,20 @@ namespace Aark.Netatmo.SDK.Models.Security
             [JsonProperty("name")]
             internal string Name { get; set; }
 
-            [JsonProperty("persons")]
-            internal Person[] Persons { get; set; }
+            [JsonProperty("persons", NullValueHandling = NullValueHandling.Ignore)]
+            internal List<Person> Persons { get; set; }
 
             [JsonProperty("place")]
             internal Place Place { get; set; }
 
-            [JsonProperty("cameras")]
-            internal Camera[] Cameras { get; set; }
+            [JsonProperty("cameras", NullValueHandling = NullValueHandling.Ignore)]
+            internal List<Camera> Cameras { get; set; }
 
-            [JsonProperty("smokedetectors")]
-            internal object[] Smokedetectors { get; set; }
+            [JsonProperty("smokedetectors", NullValueHandling = NullValueHandling.Ignore)]
+            internal List<SmokeDetector> SmokeDetectors { get; set; }
 
             [JsonProperty("events", NullValueHandling = NullValueHandling.Ignore)]
-            internal Event[] Events { get; set; }
+            internal List<Event> Events { get; set; }
         }
 
         internal struct Camera
@@ -102,7 +118,7 @@ namespace Aark.Netatmo.SDK.Models.Security
             internal string DeviceId { get; set; }
 
             [JsonProperty("person_id", NullValueHandling = NullValueHandling.Ignore)]
-            internal Guid? PersonId { get; set; }
+            internal string PersonId { get; set; }
 
             [JsonProperty("video_status")]
             internal string VideoStatus { get; set; }
@@ -112,6 +128,9 @@ namespace Aark.Netatmo.SDK.Models.Security
 
             [JsonProperty("message")]
             internal string Message { get; set; }
+
+            [JsonProperty("sub_type")]
+            internal string SubType { get; set; }
 
             [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)]
             internal string Category { get; set; }
@@ -123,7 +142,10 @@ namespace Aark.Netatmo.SDK.Models.Security
             internal Snapshot Vignette { get; set; }
 
             [JsonProperty("video_id", NullValueHandling = NullValueHandling.Ignore)]
-            internal Guid? VideoId { get; set; }
+            internal string VideoId { get; set; }
+
+            [JsonProperty("event_list", NullValueHandling = NullValueHandling.Ignore)]
+            internal List<string> EventList { get; set; }
         }
 
         internal struct Snapshot
@@ -144,7 +166,7 @@ namespace Aark.Netatmo.SDK.Models.Security
         internal struct Person
         {
             [JsonProperty("id")]
-            internal Guid Id { get; set; }
+            internal string Id { get; set; }
 
             [JsonProperty("last_seen")]
             internal long LastSeen { get; set; }

@@ -1,4 +1,5 @@
-﻿using Aark.Netatmo.SDK.Helpers;
+﻿using Aark.Netatmo.SDK.Common;
+using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
 using Aark.Netatmo.SDK.Models.Weather;
 using Aark.Netatmo.SDK.Weather;

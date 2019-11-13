@@ -303,7 +303,7 @@ namespace Aark.Netatmo.SDK.Models
         #endregion
 
         #region SecurityStation
-        internal async Task<Security.HomeData> GetHomeData(string homeId = "", int size = 30)
+        internal async Task<HomeData> GetHomeData(string homeId = "", int size = 30)
         {
             if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;

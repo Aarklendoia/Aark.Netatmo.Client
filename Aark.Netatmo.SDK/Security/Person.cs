@@ -12,14 +12,26 @@ namespace Aark.Netatmo.SDK.Security
         /// <summary>
         /// Id of the person.
         /// </summary>
-        public string Id { get; private set; }
+        public string Id { get; set; }
         /// <summary>
         /// Pseudonymous of the person if identified.
         /// </summary>
-        public string Pseudo { get; private set; }
+        public string Pseudo { get; set; }
         /// <summary>
         /// Url of the image representing the person.
         /// </summary>
-        public Uri Url { get; private set; }
+        public Uri Url { get; set; }
+        /// <summary>
+        /// Last time the person was seen.
+        /// </summary>
+        public DateTime LastSeen { get; set; }
+        /// <summary>
+        /// Version of the picture.
+        /// </summary>
+        public long Version { get; set; }
+        /// <summary>
+        /// Indicates whether the person is considered absent because he or she has not seen for some time.
+        /// </summary>
+        public bool OutOfSight { get; set; }
     }
 }

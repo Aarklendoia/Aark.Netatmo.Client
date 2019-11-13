@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Aark.Netatmo.SDK.Weather
+namespace Aark.Netatmo.SDK.Common
 {
     /// <summary>
     /// Define the location of the weather station.

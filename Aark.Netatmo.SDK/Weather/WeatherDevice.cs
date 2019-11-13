@@ -1,4 +1,5 @@
-﻿using Aark.Netatmo.SDK.Helpers;
+﻿using Aark.Netatmo.SDK.Common;
+using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
 using System;
 using System.Collections.Generic;
