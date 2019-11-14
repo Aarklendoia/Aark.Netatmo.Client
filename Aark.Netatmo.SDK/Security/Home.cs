@@ -1,6 +1,8 @@
 ﻿using Aark.Netatmo.SDK.Common;
 using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models.Security;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Aark.Netatmo.SDK.Security
@@ -64,43 +66,7 @@ namespace Aark.Netatmo.SDK.Security
                 };
                 Persons.Add(newPerson);
             }
-            foreach (HomeData.Event securityEvent in home.Events)
-            {
-                Snapshot snapshot = new Snapshot()
-                {
-                    Id = securityEvent.Snapshot.Id,
-                    Key = securityEvent.Snapshot.Key,
-                    Url = securityEvent.Snapshot.Url,
-                    Version = securityEvent.Snapshot.Version
-                };
-                SecurityEvent newEvent = new SecurityEvent
-                {
-                    Id = securityEvent.Id,
-                    Type = securityEvent.Type.ToEventType(),
-                    Time = securityEvent.Time.ToLocalDateTime(),
-                    PersonId = securityEvent.PersonId,
-                    Snapshot = snapshot,
-                    DeviceId = securityEvent.DeviceId,
-                    Message = securityEvent.Message,
-                    VideoId = securityEvent.VideoId,
-                    VideoStatus = securityEvent.VideoStatus.ToVideoStatus(),
-                    IsArrival = securityEvent.IsArrival
-                };
-                if (newEvent.Type == EventType.Alim)
-                {
-                    newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.Alim);
-                }
-                if (newEvent.Type == EventType.SD)
-                {
-                    newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.SD);
-                }
-                if (securityEvent.EventList != null)
-                {
-                    foreach (string eventItem in securityEvent.EventList)
-                        newEvent.EventList.Add(eventItem.ToEventSubType(SubEventCategory.List));
-                }
-                Events.Add(newEvent);
-            }
+            AddEvents(home.Events);
             if (home.Modules != null)
             {
                 foreach (HomeData.Module module in home.Modules)
@@ -139,6 +105,47 @@ namespace Aark.Netatmo.SDK.Security
                 }
             }
             return true;
+        }
+
+        internal void AddEvents(List<HomeData.Event> events)
+        {
+            foreach (HomeData.Event securityEvent in events)
+            {
+                Snapshot snapshot = new Snapshot()
+                {
+                    Id = securityEvent.Snapshot.Id,
+                    Key = securityEvent.Snapshot.Key,
+                    Url = securityEvent.Snapshot.Url,
+                    Version = securityEvent.Snapshot.Version
+                };
+                SecurityEvent newEvent = new SecurityEvent
+                {
+                    Id = securityEvent.Id,
+                    Type = securityEvent.Type.ToEventType(),
+                    Time = securityEvent.Time.ToLocalDateTime(),
+                    PersonId = securityEvent.PersonId,
+                    Snapshot = snapshot,
+                    DeviceId = securityEvent.DeviceId,
+                    Message = securityEvent.Message,
+                    VideoId = securityEvent.VideoId,
+                    VideoStatus = securityEvent.VideoStatus.ToVideoStatus(),
+                    IsArrival = securityEvent.IsArrival
+                };
+                if (newEvent.Type == EventType.Alim)
+                {
+                    newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.Alim);
+                }
+                if (newEvent.Type == EventType.SD)
+                {
+                    newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.SD);
+                }
+                if (securityEvent.EventList != null)
+                {
+                    foreach (string eventItem in securityEvent.EventList)
+                        newEvent.EventList.Add(eventItem.ToEventSubType(SubEventCategory.List));
+                }
+                Events.Add(newEvent);
+            }
         }
     }
 }

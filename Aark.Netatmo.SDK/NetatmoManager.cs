@@ -83,6 +83,17 @@ namespace Aark.Netatmo.SDK
         }
 
         /// <summary>
+        /// Loads next event from the event provided.
+        /// </summary>
+        /// <param name="homeId"></param>
+        /// <param name="eventId"></param>
+        /// <returns></returns>
+        public async Task<bool> GetNextSecurityEvents(string homeId, string eventId)
+        {
+            return await SecurityStation.GetNextEvents(homeId, eventId).ConfigureAwait(false);
+        }      
+
+        /// <summary>
         /// Allows you to obtain the live video stream from a camera.
         /// </summary>
         /// <param name="cameraId"></param>
@@ -90,6 +101,17 @@ namespace Aark.Netatmo.SDK
         public async Task<Uri> GetLiveStream(string cameraId)
         {
             return await SecurityStation.GetLiveStream(cameraId).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Allows you to obtain the video on demand stream from a camera.
+        /// </summary>
+        /// <param name="cameraId"></param>
+        /// <param name="videoId"></param>
+        /// <returns></returns>
+        public async Task<Uri> GetVodStream(string cameraId, string videoId)
+        {
+            return await SecurityStation.GetVodStream(cameraId, videoId).ConfigureAwait(false);
         }
     }
 }

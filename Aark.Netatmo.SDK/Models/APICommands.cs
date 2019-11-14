@@ -10,6 +10,8 @@ using Aark.Netatmo.SDK.Models.Common;
 using Aark.Netatmo.SDK.Models.Weather;
 using Aark.Netatmo.SDK.Models.Security;
 using Aark.Netatmo.SDK.Models.Energy;
+using System.Collections.Generic;
+using Aark.Netatmo.SDK.Security;
 
 namespace Aark.Netatmo.SDK.Models
 {
@@ -330,6 +332,36 @@ namespace Aark.Netatmo.SDK.Models
                     return null;
                 }
                 return homeData;
+            }
+        }
+
+        internal async Task<NextEvents> GetNextEvents(string homeId, string eventId, int size = 30)
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["home_id"] = homeId;
+            parameters["event_id"] = eventId;
+            parameters["size"] = size.ToString(CultureInfo.InvariantCulture);
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/getnextevents");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                NextEvents nextEvents = new NextEvents().FromJson(responseBody);
+                if (nextEvents.Body.Events.Count == 0) // TODO best method to known if a error occurs?
+                {
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
+                    _errorMessage = errorMeasuresData.Error.Message;
+                    return null;
+                }
+                return nextEvents;
             }
         }
 

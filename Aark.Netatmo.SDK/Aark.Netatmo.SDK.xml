@@ -1591,11 +1591,27 @@
             </summary>
             <returns>Return <see cref="T:System.Boolean">true</see> if the data has been correctly loaded.</returns>
         </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetNextSecurityEvents(System.String,System.String)">
+            <summary>
+            Loads next event from the event provided.
+            </summary>
+            <param name="homeId"></param>
+            <param name="eventId"></param>
+            <returns></returns>
+        </member>
         <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetLiveStream(System.String)">
             <summary>
             Allows you to obtain the live video stream from a camera.
             </summary>
             <param name="cameraId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetVodStream(System.String,System.String)">
+            <summary>
+            Allows you to obtain the video on demand stream from a camera.
+            </summary>
+            <param name="cameraId"></param>
+            <param name="videoId"></param>
             <returns></returns>
         </member>
         <member name="T:Aark.Netatmo.SDK.SecurityStation">

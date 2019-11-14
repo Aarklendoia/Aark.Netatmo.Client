@@ -4,7 +4,6 @@ using Aark.Netatmo.SDK.Security;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Aark.Netatmo.SDK
@@ -14,8 +13,11 @@ namespace Aark.Netatmo.SDK
     /// </summary>
     public class SecurityStation
     {
-        private const string LocalStream = "/live/index_local.m3u8";
-        private const string DistantStream = "/live/index.m3u8";
+        private const string LocalStream = "/index_local.m3u8";
+        private const string LiveLocalStream = "/live" + LocalStream;
+        private const string DistantStream = "/index.m3u8";
+        private const string LiveDistantStream = "/live" + DistantStream;
+        private const string VodPath = "/vod/";
 
         private readonly APICommands _aPICommands;
 
@@ -55,6 +57,23 @@ namespace Aark.Netatmo.SDK
             return true;
         }
 
+        internal async Task<bool> GetNextEvents(string homeId, string eventId)
+        {
+            foreach (Home home in Homes)
+            {
+                if (home.Id == homeId)
+                {
+                    NextEvents nextEvents = await _aPICommands.GetNextEvents(homeId, eventId).ConfigureAwait(false);
+                    if (nextEvents != null)
+                    {
+                        home.AddEvents(nextEvents.Body.Events);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         internal async Task<Uri> GetLiveStream(string cameraId)
         {
             Uri liveStreamUri;
@@ -65,24 +84,52 @@ namespace Aark.Netatmo.SDK
                 if (firstLocalUrl == secondLocalUrl)
                 {
                     UriBuilder uriBuilder = new UriBuilder(vpnUri);
-                    uriBuilder.Path += LocalStream;
+                    uriBuilder.Path += LiveLocalStream;
                     liveStreamUri = uriBuilder.Uri;
                 }
                 else
                 {
                     UriBuilder uriBuilder = new UriBuilder(vpnUri);
-                    uriBuilder.Path += DistantStream;
+                    uriBuilder.Path += LiveDistantStream;
                     liveStreamUri = uriBuilder.Uri;
                 }
             }
             else
             {
                 UriBuilder uriBuilder = new UriBuilder(vpnUri);
-                uriBuilder.Path += DistantStream;
+                uriBuilder.Path += LiveDistantStream;
                 liveStreamUri = uriBuilder.Uri;
             }
             return liveStreamUri;
+        }
 
+        internal async Task<Uri> GetVodStream(string cameraId, string videoId)
+        {
+            Uri vodStreamUri;
+            if (GetCamera(cameraId, out Uri vpnUri))
+            {
+                Uri firstLocalUrl = await APICommands.Ping(vpnUri).ConfigureAwait(false);
+                Uri secondLocalUrl = await APICommands.Ping(firstLocalUrl).ConfigureAwait(false);
+                if (firstLocalUrl == secondLocalUrl)
+                {
+                    UriBuilder uriBuilder = new UriBuilder(vpnUri);
+                    uriBuilder.Path += VodPath + videoId + LocalStream;
+                    vodStreamUri = uriBuilder.Uri;
+                }
+                else
+                {
+                    UriBuilder uriBuilder = new UriBuilder(vpnUri);
+                    uriBuilder.Path += VodPath + videoId + DistantStream;
+                    vodStreamUri = uriBuilder.Uri;
+                }
+            }
+            else
+            {
+                UriBuilder uriBuilder = new UriBuilder(vpnUri);
+                uriBuilder.Path += VodPath + videoId + DistantStream;
+                vodStreamUri = uriBuilder.Uri;
+            }
+            return vodStreamUri;
         }
 
         private bool GetCamera(string cameraId, out Uri vpnUri)
