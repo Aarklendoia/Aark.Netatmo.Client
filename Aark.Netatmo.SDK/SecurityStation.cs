@@ -13,6 +13,8 @@ namespace Aark.Netatmo.SDK
     /// </summary>
     public class SecurityStation
     {
+        private const string ApiUrl = "https://api.netatmo.com/api";
+        private const string CameraImageUrl = ApiUrl + "/getcamerapicture";
         private const string LocalStream = "/index_local.m3u8";
         private const string LiveLocalStream = "/live" + LocalStream;
         private const string DistantStream = "/index.m3u8";
@@ -72,6 +74,15 @@ namespace Aark.Netatmo.SDK
                 }
             }
             return false;
+        }
+
+        internal Uri GetCameraPicture(string imageId, string securityKey)
+        {
+            UriBuilder uriBuilder = new UriBuilder(CameraImageUrl)
+            {
+                Query = "image_id=" + imageId + "&key=" + securityKey
+            };
+            return uriBuilder.Uri;
         }
 
         internal async Task<Uri> GetLiveStream(string cameraId)

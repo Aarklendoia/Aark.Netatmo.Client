@@ -85,18 +85,29 @@ namespace Aark.Netatmo.SDK
         /// <summary>
         /// Loads next event from the event provided.
         /// </summary>
-        /// <param name="homeId"></param>
-        /// <param name="eventId"></param>
+        /// <param name="homeId">Identifier of the home.</param>
+        /// <param name="eventId">Identifier of the event.</param>
         /// <returns></returns>
         public async Task<bool> GetNextSecurityEvents(string homeId, string eventId)
         {
             return await SecurityStation.GetNextEvents(homeId, eventId).ConfigureAwait(false);
-        }      
+        }
 
         /// <summary>
-        /// Allows you to obtain the live video stream from a camera.
+        /// Gets the URL of the thumbnail of a person or event.
         /// </summary>
-        /// <param name="cameraId"></param>
+        /// <param name="imageId">Identifier of the image available in the face of a person or in the snapshot of an event.</param>
+        /// <param name="securityKey">Security key available in the face of a person or in the snapshot of an event.</param>
+        /// <returns></returns>
+        public Uri GetCameraPicture(string imageId, string securityKey)
+        {
+            return SecurityStation.GetCameraPicture(imageId, securityKey);
+        }
+
+        /// <summary>
+        /// Gets the live video stream from a camera.
+        /// </summary>
+        /// <param name="cameraId">Identifier of the camera.</param>
         /// <returns></returns>
         public async Task<Uri> GetLiveStream(string cameraId)
         {
@@ -104,10 +115,10 @@ namespace Aark.Netatmo.SDK
         }
 
         /// <summary>
-        /// Allows you to obtain the video on demand stream from a camera.
+        /// Gets the video on demand stream from a camera.
         /// </summary>
-        /// <param name="cameraId"></param>
-        /// <param name="videoId"></param>
+        /// <param name="cameraId">Identifier of the camera.</param>
+        /// <param name="videoId">Identifier of the video.</param>
         /// <returns></returns>
         public async Task<Uri> GetVodStream(string cameraId, string videoId)
         {

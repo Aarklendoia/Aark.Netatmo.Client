@@ -31,6 +31,23 @@ namespace Aark.Netatmo.SDK.Test
         }
 
         [TestMethod]
+        public async Task TestGetCameraPicture()
+        {
+            await netatmoManager.LoadSecurityDataAsync();
+            foreach (Home home in netatmoManager.SecurityStation.Homes)
+            {
+                if (home.Persons != null)
+                {
+                    Uri result = netatmoManager.GetCameraPicture(home.Persons[0].Face.Id, home.Persons[0].Face.Key);
+                    Assert.IsNotNull(result, netatmoManager.GetLastError());
+                    return;
+                }
+                else
+                    Assert.IsTrue(false, "No person available for this test.");
+            }
+        }
+
+        [TestMethod]
         public async Task TestGetLiveStream()
         {
             string cameraId;

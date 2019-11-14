@@ -59,10 +59,15 @@ namespace Aark.Netatmo.SDK.Security
                 {
                     Id = person.Id,
                     Pseudo = person.Pseudo,
-                    Url = person.Face.Url,
+                    Face = new Snapshot()
+                    {
+                        Id = person.Face.Id,
+                        Version = person.Face.Version,
+                        Key = person.Face.Key,
+                        Url = person.Face.Url
+                    },
                     LastSeen = person.LastSeen.ToLocalDateTime(),
-                    OutOfSight = person.OutOfSight,
-                    Version = person.Face.Version
+                    OutOfSight = person.OutOfSight                    
                 };
                 Persons.Add(newPerson);
             }

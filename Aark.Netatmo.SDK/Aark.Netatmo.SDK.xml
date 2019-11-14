@@ -1595,23 +1595,31 @@
             <summary>
             Loads next event from the event provided.
             </summary>
-            <param name="homeId"></param>
-            <param name="eventId"></param>
+            <param name="homeId">Identifier of the home.</param>
+            <param name="eventId">Identifier of the event.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetCameraPicture(System.String,System.String)">
+            <summary>
+            Gets the URL of the thumbnail of a person or event.
+            </summary>
+            <param name="imageId">Identifier of the image available in the face of a person or in the snapshot of an event.</param>
+            <param name="securityKey">Security key available in the face of a person or in the snapshot of an event.</param>
             <returns></returns>
         </member>
         <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetLiveStream(System.String)">
             <summary>
-            Allows you to obtain the live video stream from a camera.
+            Gets the live video stream from a camera.
             </summary>
-            <param name="cameraId"></param>
+            <param name="cameraId">Identifier of the camera.</param>
             <returns></returns>
         </member>
         <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetVodStream(System.String,System.String)">
             <summary>
-            Allows you to obtain the video on demand stream from a camera.
+            Gets the video on demand stream from a camera.
             </summary>
-            <param name="cameraId"></param>
-            <param name="videoId"></param>
+            <param name="cameraId">Identifier of the camera.</param>
+            <param name="videoId">Identifier of the video.</param>
             <returns></returns>
         </member>
         <member name="T:Aark.Netatmo.SDK.SecurityStation">
@@ -1764,19 +1772,14 @@
             Pseudonymous of the person if identified.
             </summary>
         </member>
-        <member name="P:Aark.Netatmo.SDK.Security.Person.Url">
+        <member name="P:Aark.Netatmo.SDK.Security.Person.Face">
             <summary>
-            Url of the image representing the person.
+            Face of the person.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Person.LastSeen">
             <summary>
             Last time the person was seen.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.Person.Version">
-            <summary>
-            Version of the picture.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Person.OutOfSight">
@@ -1849,31 +1852,6 @@
             If several events are detected in the same video, they will be aggregated in this array. 
             </summary>
         </member>
-        <member name="T:Aark.Netatmo.SDK.Security.Snapshot">
-            <summary>
-            Defines a snapshot.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Id">
-            <summary>
-            Id of the snapshot.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Version">
-            <summary>
-            Version of the snapshot.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Key">
-            <summary>
-            Key of the snapshot.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Url">
-            <summary>
-            URL of the snapshot.
-            </summary>
-        </member>
         <member name="T:Aark.Netatmo.SDK.Security.SecurityModule">
             <summary>
             Define a home module.
@@ -1932,6 +1910,31 @@
         <member name="P:Aark.Netatmo.SDK.Security.SmokeDetector.SetupDate">
             <summary>
             Date on which the device was setted. 
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.Snapshot">
+            <summary>
+            Defines a snapshot.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Id">
+            <summary>
+            Id of the snapshot.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Version">
+            <summary>
+            Version of the snapshot.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Key">
+            <summary>
+            Key of the snapshot.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Snapshot.Url">
+            <summary>
+            URL of the snapshot.
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Security.User">
