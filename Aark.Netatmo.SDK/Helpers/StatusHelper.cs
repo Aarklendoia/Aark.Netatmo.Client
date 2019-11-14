@@ -133,6 +133,51 @@
     }
 
     /// <summary>
+    /// Status of a camera.
+    /// </summary>
+    public enum CameraStatus
+    {
+        /// <summary>
+        /// On.
+        /// </summary>
+        On,
+        /// <summary>
+        /// Off.
+        /// </summary>
+        Off
+    }
+
+    /// <summary>
+    /// Status of the SD Card.
+    /// </summary>
+    public enum SDCardStatus
+    {
+        /// <summary>
+        /// On.
+        /// </summary>
+        On,
+        /// <summary>
+        /// Off.
+        /// </summary>
+        Off
+    }
+
+    /// <summary>
+    /// Status of the alimentation.
+    /// </summary>
+    public enum AlimStatus
+    {
+        /// <summary>
+        /// On.
+        /// </summary>
+        On,
+        /// <summary>
+        /// Off.
+        /// </summary>
+        Off
+    }
+    
+    /// <summary>
     /// Tools to manage status.
     /// </summary>
     public static class StatusHelper
@@ -307,6 +352,45 @@
                     return StatusSecurityModule.CalibrationFailed;
                 default:
                     return StatusSecurityModule.Unknown;
+            }
+        }
+
+        internal static CameraStatus ToCameraStatus(this string value)
+        {
+            switch (value)
+            {
+                case "on":
+                    return CameraStatus.On;
+                case "off":
+                    return CameraStatus.Off;
+                default:
+                    return CameraStatus.Off;
+            }
+        }
+
+        internal static SDCardStatus ToSDCardStatus(this string value)
+        {
+            switch (value)
+            {
+                case "on":
+                    return SDCardStatus.On;
+                case "off":
+                    return SDCardStatus.Off;
+                default:
+                    return SDCardStatus.Off;
+            }
+        }
+
+        internal static AlimStatus ToAlimStatus(this string value)
+        {
+            switch (value)
+            {
+                case "on":
+                    return AlimStatus.On;
+                case "off":
+                    return AlimStatus.Off;
+                default:
+                    return AlimStatus.Off;
             }
         }
     }

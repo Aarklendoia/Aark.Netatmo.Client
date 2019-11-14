@@ -1,12 +1,9 @@
 ﻿using Aark.Netatmo.SDK.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using System.Threading.Tasks;
-using Aark.Netatmo.SDK.Security;
 using Aark.Netatmo.SDK.Models.Security;
+using Aark.Netatmo.SDK.Security;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace Aark.Netatmo.SDK
 {
@@ -25,6 +22,10 @@ namespace Aark.Netatmo.SDK
         /// User related information.
         /// </summary>
         public User User { get; set; } = new User();
+        /// <summary>
+        /// Specifies whether tags should be displayed in the timeline.
+        /// </summary>
+        public bool ShowTags { get; set; }
 
         internal SecurityStation(APICommands aPICommands)
         {
@@ -45,6 +46,7 @@ namespace Aark.Netatmo.SDK
             User.RegionInfo = new RegionInfo(homeData.Body.User.Country);
             User.Language = homeData.Body.User.Lang;
             User.CultureInfo = new CultureInfo(homeData.Body.User.RegLocale);
+            ShowTags = homeData.Body.GlobalInfo.ShowTags;
             return true;
         }
     }

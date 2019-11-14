@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Aark.Netatmo.SDK.Helpers
+﻿namespace Aark.Netatmo.SDK.Helpers
 {
     /// <summary>
     /// Lists the types of possible events.
@@ -232,6 +228,17 @@ namespace Aark.Netatmo.SDK.Helpers
     }
 
     /// <summary>
+    /// Type of the camera.
+    /// </summary>
+    public enum CameraType
+    {
+        /// <summary>
+        /// Camera
+        /// </summary>
+        Camera
+    }
+
+    /// <summary>
     /// Tools for the types used by SecurityData.
     /// </summary>
     public static class SecurityHelper
@@ -396,6 +403,22 @@ namespace Aark.Netatmo.SDK.Helpers
                     return SecurityModuleType.Tag;
                 default:
                     return SecurityModuleType.Tag;
+            }
+        }
+
+        /// <summary>
+        /// Convert a <paramref name="value"/> to a <see cref="CameraType"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>The <see cref="CameraType"/> corresponding to the input <paramref name="value"/></returns>
+        public static CameraType ToCameraType(this string value)
+        {
+            switch (value)
+            {
+                case "NACamera":
+                    return CameraType.Camera;
+                default:
+                    return CameraType.Camera;
             }
         }
     }

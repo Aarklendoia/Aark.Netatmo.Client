@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
-using System.Resources;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace Aark.Netatmo.SDK.Models.Security
 {

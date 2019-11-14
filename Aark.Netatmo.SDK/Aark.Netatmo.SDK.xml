@@ -1169,6 +1169,16 @@
             Tag.
             </summary>
         </member>
+        <member name="T:Aark.Netatmo.SDK.Helpers.CameraType">
+            <summary>
+            Type of the camera.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.CameraType.Camera">
+            <summary>
+            Camera
+            </summary>
+        </member>
         <member name="T:Aark.Netatmo.SDK.Helpers.SecurityHelper">
             <summary>
             Tools for the types used by SecurityData.
@@ -1202,6 +1212,13 @@
             </summary>
             <param name="value"></param>
             <returns>The <see cref="T:Aark.Netatmo.SDK.Helpers.SecurityModuleType"/> corresponding to the input <paramref name="value"/></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.Helpers.SecurityHelper.ToCameraType(System.String)">
+            <summary>
+            Convert a <paramref name="value"/> to a <see cref="T:Aark.Netatmo.SDK.Helpers.CameraType"/>
+            </summary>
+            <param name="value"></param>
+            <returns>The <see cref="T:Aark.Netatmo.SDK.Helpers.CameraType"/> corresponding to the input <paramref name="value"/></returns>
         </member>
         <member name="T:Aark.Netatmo.SDK.Helpers.SignalStatus">
             <summary>
@@ -1351,6 +1368,51 @@
         <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.CalibrationFailed">
             <summary>
             Calibration failed.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Helpers.CameraStatus">
+            <summary>
+            Status of a camera.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.CameraStatus.On">
+            <summary>
+            On.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.CameraStatus.Off">
+            <summary>
+            Off.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Helpers.SDCardStatus">
+            <summary>
+            Status of the SD Card.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.SDCardStatus.On">
+            <summary>
+            On.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.SDCardStatus.Off">
+            <summary>
+            Off.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Helpers.AlimStatus">
+            <summary>
+            Status of the alimentation.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.AlimStatus.On">
+            <summary>
+            On.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.AlimStatus.Off">
+            <summary>
+            Off.
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Helpers.StatusHelper">
@@ -1544,6 +1606,66 @@
             User related information.
             </summary>
         </member>
+        <member name="P:Aark.Netatmo.SDK.SecurityStation.ShowTags">
+            <summary>
+            Specifies whether tags should be displayed in the timeline.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.Camera">
+            <summary>
+            Camera.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.Id">
+            <summary>
+            Identifier of the camera.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.Type">
+            <summary>
+            Type of the camera.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.Status">
+            <summary>
+            Status of the camera.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.VpnUrl">
+            <summary>
+            Url of the VPN.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.IsLocal">
+            <summary>
+            Check you can access the camera locally.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.SDCardStatus">
+            <summary>
+            Status of the alimentation.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.AlimStatus">
+            <summary>
+            Status of the alimentation.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.Name">
+            <summary>
+            Name of the camera.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.UsePinCode">
+            <summary>
+            Enabling or disabling the camera requires the PIN code.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Camera.LastSetup">
+            <summary>
+            Timestamp of the last setup.
+            </summary>
+        </member>
         <member name="T:Aark.Netatmo.SDK.Security.ICommonSecurityDevice">
             <summary>
             Common properties for a Security device.
@@ -1599,6 +1721,11 @@
             Modules in the Home.
             </summary>
         </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Home.Cameras">
+            <summary>
+            All cameras in the Home.
+            </summary>
+        </member>
         <member name="T:Aark.Netatmo.SDK.Security.Person">
             <summary>
             Defines a person.
@@ -1606,7 +1733,7 @@
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Person.Id">
             <summary>
-            Id of the person.
+            Identifier of the person.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Person.Pseudo">
@@ -1632,26 +1759,6 @@
         <member name="P:Aark.Netatmo.SDK.Security.Person.OutOfSight">
             <summary>
             Indicates whether the person is considered absent because he or she has not seen for some time.
-            </summary>
-        </member>
-        <member name="T:Aark.Netatmo.SDK.Security.PresenceCamera">
-            <summary>
-            Outdoor Presence Camera of Netatmo.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.PresenceCamera.Id">
-            <summary>
-            Id of the device.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.PresenceCamera.Name">
-            <summary>
-            Name of the device.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.PresenceCamera.SetupDate">
-            <summary>
-            Date on which the device was setted. 
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Security.SecurityEvent">
@@ -1822,26 +1929,6 @@
         <member name="P:Aark.Netatmo.SDK.Security.User.RegionInfo">
             <summary>
             Country of the user.
-            </summary>
-        </member>
-        <member name="T:Aark.Netatmo.SDK.Security.WelcomeCamera">
-            <summary>
-            Indoor Welcome Camera of Netatmo.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.WelcomeCamera.Id">
-            <summary>
-            Id of the device.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.WelcomeCamera.Name">
-            <summary>
-            Name of the device.
-            </summary>
-        </member>
-        <member name="P:Aark.Netatmo.SDK.Security.WelcomeCamera.SetupDate">
-            <summary>
-            Date on which the device was setted. 
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.WeatherStation">

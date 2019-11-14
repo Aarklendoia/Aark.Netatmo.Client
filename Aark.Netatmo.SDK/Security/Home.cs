@@ -1,10 +1,7 @@
 ﻿using Aark.Netatmo.SDK.Common;
 using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models.Security;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace Aark.Netatmo.SDK.Security
 {
@@ -37,6 +34,10 @@ namespace Aark.Netatmo.SDK.Security
         /// Modules in the Home.
         /// </summary>
         public ObservableCollection<SecurityModule> Modules { get; private set; } = new ObservableCollection<SecurityModule>();
+        /// <summary>
+        /// All cameras in the Home.
+        /// </summary>
+        public ObservableCollection<Camera> Cameras { get; private set; } = new ObservableCollection<Camera>();
 
         internal bool Load(HomeData.Home home)
         {
@@ -115,6 +116,26 @@ namespace Aark.Netatmo.SDK.Security
                         Type = module.Type.ToSecurityModuleType()
                     };
                     Modules.Add(securityModule);
+                }
+            }
+            if (home.Cameras != null)
+            {
+                foreach (HomeData.Camera camera in home.Cameras)
+                {
+                    Camera newCamera = new Camera()
+                    {
+                        AlimStatus = camera.AlimStatus.ToAlimStatus(),
+                        Id = camera.Id,
+                        IsLocal = camera.IsLocal,
+                        LastSetup = camera.LastSetup.ToLocalDateTime(),
+                        Name = camera.Name,
+                        SDCardStatus = camera.SdStatus.ToSDCardStatus(),
+                        Status = camera.Status.ToCameraStatus(),
+                        Type = camera.Type.ToCameraType(),
+                        UsePinCode = camera.UsePinCode,
+                        VpnUrl = camera.VpnUrl
+                    };
+                    Cameras.Add(newCamera);
                 }
             }
             return true;

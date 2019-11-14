@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Aark.Netatmo.SDK.Security
 {
@@ -10,7 +8,7 @@ namespace Aark.Netatmo.SDK.Security
     public class Person
     {
         /// <summary>
-        /// Id of the person.
+        /// Identifier of the person.
         /// </summary>
         public string Id { get; set; }
         /// <summary>
