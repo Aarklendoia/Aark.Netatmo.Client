@@ -1159,6 +1159,16 @@
             Available.
             </summary>
         </member>
+        <member name="T:Aark.Netatmo.SDK.Helpers.SecurityModuleType">
+            <summary>
+            Type of module.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.SecurityModuleType.Tag">
+            <summary>
+            Tag.
+            </summary>
+        </member>
         <member name="T:Aark.Netatmo.SDK.Helpers.SecurityHelper">
             <summary>
             Tools for the types used by SecurityData.
@@ -1185,6 +1195,13 @@
             </summary>
             <param name="value"></param>
             <returns>The <see cref="T:Aark.Netatmo.SDK.Helpers.VideoStatus"/> corresponding to the input <paramref name="value"/></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.Helpers.SecurityHelper.ToSecurityModuleType(System.String)">
+            <summary>
+            Convert a <paramref name="value"/> to a <see cref="T:Aark.Netatmo.SDK.Helpers.SecurityModuleType"/>
+            </summary>
+            <param name="value"></param>
+            <returns>The <see cref="T:Aark.Netatmo.SDK.Helpers.SecurityModuleType"/> corresponding to the input <paramref name="value"/></returns>
         </member>
         <member name="T:Aark.Netatmo.SDK.Helpers.SignalStatus">
             <summary>
@@ -1294,6 +1311,46 @@
         <member name="F:Aark.Netatmo.SDK.Helpers.WifiStatus.Poor">
             <summary>
             Poor.
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Helpers.StatusSecurityModule">
+            <summary>
+            Status of a security module.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.Unknown">
+            <summary>
+            Unknown.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.Open">
+            <summary>
+            Open.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.Closed">
+            <summary>
+            Closed.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.Undefined">
+            <summary>
+            Not calibred yet.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.ConnectionLost">
+            <summary>
+            Connection lost.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.Calibrating">
+            <summary>
+            Calibrating.
+            </summary>
+        </member>
+        <member name="F:Aark.Netatmo.SDK.Helpers.StatusSecurityModule.CalibrationFailed">
+            <summary>
+            Calibration failed.
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Helpers.StatusHelper">
@@ -1434,6 +1491,11 @@
             Energy data.
             </summary>
         </member>
+        <member name="P:Aark.Netatmo.SDK.NetatmoManager.SecurityStation">
+            <summary>
+            Security data.
+            </summary>
+        </member>
         <member name="M:Aark.Netatmo.SDK.NetatmoManager.#ctor(System.String,System.String,System.String,System.String)">
             <summary>
             Create a new manager for a user.
@@ -1461,6 +1523,12 @@
             </summary>
             <returns>Return <see cref="T:System.Boolean">true</see> if the data has been correctly loaded.</returns>
         </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.LoadSecurityDataAsync">
+            <summary>
+            Loads all data related to the security station.
+            </summary>
+            <returns>Return <see cref="T:System.Boolean">true</see> if the data has been correctly loaded.</returns>
+        </member>
         <member name="T:Aark.Netatmo.SDK.SecurityStation">
             <summary>
             Netatmo Security station.
@@ -1469,6 +1537,11 @@
         <member name="P:Aark.Netatmo.SDK.SecurityStation.Homes">
             <summary>
             List of the homes.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.SecurityStation.User">
+            <summary>
+            User related information.
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Security.ICommonSecurityDevice">
@@ -1498,12 +1571,12 @@
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Home.Id">
             <summary>
-            id of the home.
+            Identifier of the home.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Home.Name">
             <summary>
-            name of the home.
+            Name of the home.
             </summary>
         </member>
         <member name="P:Aark.Netatmo.SDK.Security.Home.Place">
@@ -1519,6 +1592,11 @@
         <member name="P:Aark.Netatmo.SDK.Security.Home.Events">
             <summary>
             Event detected by the camera.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.Home.Modules">
+            <summary>
+            Modules in the Home.
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Security.Person">
@@ -1666,6 +1744,46 @@
             URL of the snapshot.
             </summary>
         </member>
+        <member name="T:Aark.Netatmo.SDK.Security.SecurityModule">
+            <summary>
+            Define a home module.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SecurityModule.Id">
+            <summary>
+            Mac address of the module.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SecurityModule.Type">
+            <summary>
+            Type of the module.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SecurityModule.Name">
+            <summary>
+            Name of the module (given by the user).
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SecurityModule.BatteryPercent">
+            <summary>
+            Remaining battery percentage.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SecurityModule.Status">
+            <summary>
+            Status of the module.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SecurityModule.RadioStatus">
+            <summary>
+            Radio status.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.SecurityModule.LastActivity">
+            <summary>
+            Timestamp of last move detected by the module.
+            </summary>
+        </member>
         <member name="T:Aark.Netatmo.SDK.Security.SmokeDetector">
             <summary>
             Smoke dectector of Netatmo.
@@ -1684,6 +1802,26 @@
         <member name="P:Aark.Netatmo.SDK.Security.SmokeDetector.SetupDate">
             <summary>
             Date on which the device was setted. 
+            </summary>
+        </member>
+        <member name="T:Aark.Netatmo.SDK.Security.User">
+            <summary>
+            User related information.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.User.Language">
+            <summary>
+            Language used by the user.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.User.CultureInfo">
+            <summary>
+            Culture uses by the user.
+            </summary>
+        </member>
+        <member name="P:Aark.Netatmo.SDK.Security.User.RegionInfo">
+            <summary>
+            Country of the user.
             </summary>
         </member>
         <member name="T:Aark.Netatmo.SDK.Security.WelcomeCamera">

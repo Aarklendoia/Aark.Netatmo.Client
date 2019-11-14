@@ -14,11 +14,11 @@ namespace Aark.Netatmo.SDK.Security
     public class Home
     {
         /// <summary>
-        /// id of the home.
+        /// Identifier of the home.
         /// </summary>
         public string Id { get; private set; }
         /// <summary>
-        /// name of the home.
+        /// Name of the home.
         /// </summary>
         public string Name { get; private set; }
         /// <summary>
@@ -33,8 +33,10 @@ namespace Aark.Netatmo.SDK.Security
         /// Event detected by the camera.
         /// </summary>
         public ObservableCollection<SecurityEvent> Events { get; private set; } = new ObservableCollection<SecurityEvent>();
-
-        // TODO modules, user, place
+        /// <summary>
+        /// Modules in the Home.
+        /// </summary>
+        public ObservableCollection<SecurityModule> Modules { get; private set; } = new ObservableCollection<SecurityModule>();
 
         internal bool Load(HomeData.Home home)
         {
@@ -91,9 +93,29 @@ namespace Aark.Netatmo.SDK.Security
                 {
                     newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.SD);
                 }
-                foreach (string eventItem in securityEvent.EventList)
-                    newEvent.EventList.Add(eventItem.ToEventSubType(SubEventCategory.List));
+                if (securityEvent.EventList != null)
+                {
+                    foreach (string eventItem in securityEvent.EventList)
+                        newEvent.EventList.Add(eventItem.ToEventSubType(SubEventCategory.List));
+                }
                 Events.Add(newEvent);
+            }
+            if (home.Modules != null)
+            {
+                foreach (HomeData.Module module in home.Modules)
+                {
+                    SecurityModule securityModule = new SecurityModule()
+                    {
+                        BatteryPercent = module.BatteryPercent,
+                        Id = module.Id,
+                        LastActivity = module.LastActivity.ToLocalDateTime(),
+                        Name = module.Name,
+                        RadioStatus = module.RadioFrequecy.ToRadioFrequencyStatus(),
+                        Status = module.Status.ToStatusSecurityModule(),
+                        Type = module.Type.ToSecurityModuleType()
+                    };
+                    Modules.Add(securityModule);
+                }
             }
             return true;
         }

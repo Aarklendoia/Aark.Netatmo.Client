@@ -98,6 +98,41 @@
     }
 
     /// <summary>
+    /// Status of a security module.
+    /// </summary>
+    public enum StatusSecurityModule
+    {
+        /// <summary>
+        /// Unknown.
+        /// </summary>
+        Unknown,
+        /// <summary>
+        /// Open.
+        /// </summary>
+        Open,
+        /// <summary>
+        /// Closed.
+        /// </summary>
+        Closed,
+        /// <summary>
+        /// Not calibred yet.
+        /// </summary>
+        Undefined,
+        /// <summary>
+        /// Connection lost.
+        /// </summary>
+        ConnectionLost,
+        /// <summary>
+        /// Calibrating.
+        /// </summary>
+        Calibrating,
+        /// <summary>
+        /// Calibration failed.
+        /// </summary>
+        CalibrationFailed
+    }
+
+    /// <summary>
     /// Tools to manage status.
     /// </summary>
     public static class StatusHelper
@@ -251,6 +286,27 @@
                     return WifiStatus.Poor;
                 default:
                     return WifiStatus.Medium;
+            }
+        }
+
+        internal static StatusSecurityModule ToStatusSecurityModule(this string value)
+        {
+            switch (value)
+            {
+                case "open":
+                    return StatusSecurityModule.Open;
+                case "closed":
+                    return StatusSecurityModule.Closed;
+                case "undefined":
+                    return StatusSecurityModule.Undefined;
+                case "no_news":
+                    return StatusSecurityModule.ConnectionLost;
+                case "calibrating":
+                    return StatusSecurityModule.Calibrating;
+                case "calibration_failed":
+                    return StatusSecurityModule.CalibrationFailed;
+                default:
+                    return StatusSecurityModule.Unknown;
             }
         }
     }

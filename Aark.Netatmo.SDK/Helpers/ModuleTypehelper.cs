@@ -61,7 +61,7 @@
         /// </summary>
         /// <param name="value"></param>
         /// <returns>The <see cref="ToModuleType"/> corresponding to the input <paramref name="value"/></returns>
-        public static ModuleType ToModuleType(this string value)
+        internal static ModuleType ToModuleType(this string value)
         {
             switch (value)
             {

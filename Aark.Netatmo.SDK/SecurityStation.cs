@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Aark.Netatmo.SDK.Security;
 using Aark.Netatmo.SDK.Models.Security;
+using System.Globalization;
 
 namespace Aark.Netatmo.SDK
 {
@@ -20,6 +21,10 @@ namespace Aark.Netatmo.SDK
         /// List of the homes.
         /// </summary>
         public ObservableCollection<Home> Homes { get; private set; } = new ObservableCollection<Home>();
+        /// <summary>
+        /// User related information.
+        /// </summary>
+        public User User { get; set; } = new User();
 
         internal SecurityStation(APICommands aPICommands)
         {
@@ -34,9 +39,12 @@ namespace Aark.Netatmo.SDK
             foreach (HomeData.Home datahome in homeData.Body.Homes)
             {
                 Home home = new Home();
-                home.Load(datahome);
-                Homes.Add(home);
+                if (home.Load(datahome))
+                    Homes.Add(home);
             }
+            User.RegionInfo = new RegionInfo(homeData.Body.User.Country);
+            User.Language = homeData.Body.User.Lang;
+            User.CultureInfo = new CultureInfo(homeData.Body.User.RegLocale);
             return true;
         }
     }

@@ -43,6 +43,31 @@ namespace Aark.Netatmo.SDK.Models.Security
             internal string Name { get; set; }
         }
 
+        internal struct Module
+        {
+            [JsonProperty("id")]
+            internal string Id { get; set; }
+
+
+            [JsonProperty("type")]
+            internal string Type { get; set; }
+
+            [JsonProperty("name")]
+            internal string Name { get; set; }
+
+            [JsonProperty("battery_percent")]
+            internal long BatteryPercent { get; set; }
+
+            [JsonProperty("status")]
+            internal string Status { get; set; }
+
+            [JsonProperty("rf")]
+            internal long RadioFrequecy { get; set; }
+
+            [JsonProperty("last_activity")]
+            internal long LastActivity { get; set; }
+        }
+
         internal struct Home
         {
             [JsonProperty("id")]
@@ -65,6 +90,9 @@ namespace Aark.Netatmo.SDK.Models.Security
 
             [JsonProperty("events", NullValueHandling = NullValueHandling.Ignore)]
             internal List<Event> Events { get; set; }
+
+            [JsonProperty("modules", NullValueHandling = NullValueHandling.Ignore)]
+            internal List<Module> Modules { get; set; }
         }
 
         internal struct Camera

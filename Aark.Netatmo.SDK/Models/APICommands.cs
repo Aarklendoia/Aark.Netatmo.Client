@@ -308,7 +308,8 @@ namespace Aark.Netatmo.SDK.Models
             if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
-            parameters["home_id"] = homeId;
+            if (!string.IsNullOrEmpty(homeId))
+                parameters["home_id"] = homeId;
             parameters["size"] = size.ToString(CultureInfo.InvariantCulture);
 
             using (HttpClient client = new HttpClient())

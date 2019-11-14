@@ -19,6 +19,10 @@ namespace Aark.Netatmo.SDK
         /// Energy data.
         /// </summary>
         public EnergyStation EnergyStation { get; private set; }
+        /// <summary>
+        /// Security data.
+        /// </summary>
+        public SecurityStation SecurityStation { get; private set; }
 
         /// <summary>
         /// Create a new manager for a user.
@@ -39,6 +43,7 @@ namespace Aark.Netatmo.SDK
             };
             WeatherStation = new WeatherStation(_APICommands);
             EnergyStation = new EnergyStation(_APICommands);
+            SecurityStation = new SecurityStation(_APICommands);
         }
 
         /// <summary>
@@ -66,6 +71,15 @@ namespace Aark.Netatmo.SDK
         public async Task<bool> LoadEnergyDataAsync()
         {
             return await EnergyStation.LoadDataAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Loads all data related to the security station.
+        /// </summary>
+        /// <returns>Return <see cref="bool">true</see> if the data has been correctly loaded.</returns>
+        public async Task<bool> LoadSecurityDataAsync()
+        {
+            return await SecurityStation.LoadDataAsync().ConfigureAwait(false);
         }
     }
 }

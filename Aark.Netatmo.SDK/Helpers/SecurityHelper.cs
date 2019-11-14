@@ -221,6 +221,17 @@ namespace Aark.Netatmo.SDK.Helpers
     }
 
     /// <summary>
+    /// Type of module.
+    /// </summary>
+    public enum SecurityModuleType
+    {
+        /// <summary>
+        /// Tag.
+        /// </summary>
+        Tag
+    }
+
+    /// <summary>
     /// Tools for the types used by SecurityData.
     /// </summary>
     public static class SecurityHelper
@@ -369,6 +380,22 @@ namespace Aark.Netatmo.SDK.Helpers
                     return VideoStatus.Recording;
                 default:
                     return VideoStatus.Recording;
+            }
+        }
+
+        /// <summary>
+        /// Convert a <paramref name="value"/> to a <see cref="SecurityModuleType"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>The <see cref="SecurityModuleType"/> corresponding to the input <paramref name="value"/></returns>
+        public static SecurityModuleType ToSecurityModuleType(this string value)
+        {
+            switch (value)
+            {
+                case "NACamDoorTag":
+                    return SecurityModuleType.Tag;
+                default:
+                    return SecurityModuleType.Tag;
             }
         }
     }
