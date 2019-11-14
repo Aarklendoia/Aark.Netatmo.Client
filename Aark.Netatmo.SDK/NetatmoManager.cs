@@ -1,5 +1,7 @@
 ﻿using Aark.Netatmo.SDK.Models;
+using Aark.Netatmo.SDK.Security;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Aark.Netatmo.SDK
@@ -102,6 +104,17 @@ namespace Aark.Netatmo.SDK
         public async Task<bool> GetSecurityEventsUntil(string homeId, string eventId)
         {
             return await SecurityStation.GetEventsUntil(homeId, eventId).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Loads latest events for the person provided.
+        /// </summary>
+        /// <param name="homeId">Identifier of the home.</param>
+        /// <param name="personId">Identifier of the person.</param>
+        /// <returns></returns>
+        public async Task<ObservableCollection<SecurityEvent>> GetLastSecurityEventsFor(string homeId, string personId)
+        {
+            return await SecurityStation.GetLastEventsFor(homeId, personId).ConfigureAwait(false);
         }
 
         /// <summary>

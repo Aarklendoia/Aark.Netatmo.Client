@@ -1607,6 +1607,14 @@
             <param name="eventId">Identifier of the event.</param>
             <returns></returns>
         </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetLastSecurityEventsFor(System.String,System.String)">
+            <summary>
+            Loads latest events for the person provided.
+            </summary>
+            <param name="homeId">Identifier of the home.</param>
+            <param name="personId">Identifier of the person.</param>
+            <returns></returns>
+        </member>
         <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetCameraPicture(System.String,System.String)">
             <summary>
             Gets the URL of the thumbnail of a person or event.

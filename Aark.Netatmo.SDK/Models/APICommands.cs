@@ -365,19 +365,49 @@ namespace Aark.Netatmo.SDK.Models
             }
         }
 
-        internal async Task<NextEvents> GetEventsUntil(string homeId, string eventId)
+        internal async Task<NextEvents> GetEventsUntil(string homeId, string eventId, int offset = 30)
         {
             if (!await CheckConnectionAsync().ConfigureAwait(false))
                 return null;
             var parameters = HttpUtility.ParseQueryString(string.Empty);
             parameters["home_id"] = homeId;
             parameters["event_id"] = eventId;
+            parameters["offset"] = offset.ToString(CultureInfo.InvariantCulture);
 
             using (HttpClient client = new HttpClient())
             using (HttpRequestMessage request = new HttpRequestMessage())
             {
                 request.Method = HttpMethod.Post;
                 request.RequestUri = new Uri(host + apiPath + "/geteventsuntil");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                NextEvents nextEvents = new NextEvents().FromJson(responseBody);
+                if (nextEvents.Body.Events.Count == 0) // TODO best method to known if a error occurs?
+                {
+                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
+                    _errorMessage = errorMeasuresData.Error.Message;
+                    return null;
+                }
+                return nextEvents;
+            }
+        }
+
+        internal async Task<NextEvents> GetLastEventOf(string homeId, string personId)
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["home_id"] = homeId;
+            parameters["person_id"] = personId;
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/getlasteventof");
 
                 request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
                 request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");

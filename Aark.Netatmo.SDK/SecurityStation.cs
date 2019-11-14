@@ -1,7 +1,9 @@
-﻿using Aark.Netatmo.SDK.Models;
+﻿using Aark.Netatmo.SDK.Helpers;
+using Aark.Netatmo.SDK.Models;
 using Aark.Netatmo.SDK.Models.Security;
 using Aark.Netatmo.SDK.Security;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -74,6 +76,28 @@ namespace Aark.Netatmo.SDK
                 }
             }
             return false;
+        }
+
+        internal async Task<ObservableCollection<SecurityEvent>> GetLastEventsFor(string homeId, string personId)
+        {
+            ObservableCollection<SecurityEvent> events = new ObservableCollection<SecurityEvent>();
+            foreach (Home home in Homes)
+            {
+                if (home.Id == homeId)
+                {
+                    NextEvents nextEvents = await _aPICommands.GetLastEventOf(homeId, personId).ConfigureAwait(false);
+                    if (nextEvents != null)
+                    {
+                        foreach (HomeData.Event rawEvent in nextEvents.Body.Events)
+                        {
+                            SecurityEvent newEvent = Home.CreateNewSecurityEvent(rawEvent);
+                            events.Add(newEvent);
+                        }
+                        return events;
+                    }
+                }
+            }
+            return events;
         }
 
         internal async Task<bool> GetEventsUntil(string homeId, string eventId)

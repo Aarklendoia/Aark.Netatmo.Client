@@ -114,43 +114,48 @@ namespace Aark.Netatmo.SDK.Security
 
         internal void AddEvents(List<HomeData.Event> events)
         {
-            foreach (HomeData.Event securityEvent in events)
+            foreach (HomeData.Event rawEvent in events)
             {
-                Snapshot snapshot = new Snapshot()
+                SecurityEvent newEvent = CreateNewSecurityEvent(rawEvent);
+                Events.Add(newEvent);
+            }
+        }
+
+        internal static SecurityEvent CreateNewSecurityEvent(HomeData.Event securityEvent)
+        {
+            SecurityEvent newEvent = new SecurityEvent
+            {
+                Id = securityEvent.Id,
+                Type = securityEvent.Type.ToEventType(),
+                Time = securityEvent.Time.ToLocalDateTime(),
+                PersonId = securityEvent.PersonId,
+                Snapshot = new Snapshot()
                 {
                     Id = securityEvent.Snapshot.Id,
                     Key = securityEvent.Snapshot.Key,
                     Url = securityEvent.Snapshot.Url,
                     Version = securityEvent.Snapshot.Version
-                };
-                SecurityEvent newEvent = new SecurityEvent
-                {
-                    Id = securityEvent.Id,
-                    Type = securityEvent.Type.ToEventType(),
-                    Time = securityEvent.Time.ToLocalDateTime(),
-                    PersonId = securityEvent.PersonId,
-                    Snapshot = snapshot,
-                    DeviceId = securityEvent.DeviceId,
-                    Message = securityEvent.Message,
-                    VideoId = securityEvent.VideoId,
-                    VideoStatus = securityEvent.VideoStatus.ToVideoStatus(),
-                    IsArrival = securityEvent.IsArrival
-                };
-                if (newEvent.Type == EventType.Alim)
-                {
-                    newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.Alim);
-                }
-                if (newEvent.Type == EventType.SD)
-                {
-                    newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.SD);
-                }
-                if (securityEvent.EventList != null)
-                {
-                    foreach (string eventItem in securityEvent.EventList)
-                        newEvent.EventList.Add(eventItem.ToEventSubType(SubEventCategory.List));
-                }
-                Events.Add(newEvent);
+                },
+                DeviceId = securityEvent.DeviceId,
+                Message = securityEvent.Message,
+                VideoId = securityEvent.VideoId,
+                VideoStatus = securityEvent.VideoStatus.ToVideoStatus(),
+                IsArrival = securityEvent.IsArrival
+            };
+            if (newEvent.Type == EventType.Alim)
+            {
+                newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.Alim);
             }
+            if (newEvent.Type == EventType.SD)
+            {
+                newEvent.SubType = securityEvent.SubType.ToEventSubType(SubEventCategory.SD);
+            }
+            if (securityEvent.EventList != null)
+            {
+                foreach (string eventItem in securityEvent.EventList)
+                    newEvent.EventList.Add(eventItem.ToEventSubType(SubEventCategory.List));
+            }
+            return newEvent;
         }
     }
 }
