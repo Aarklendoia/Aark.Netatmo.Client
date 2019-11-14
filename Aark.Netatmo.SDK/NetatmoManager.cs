@@ -83,7 +83,7 @@ namespace Aark.Netatmo.SDK
         }
 
         /// <summary>
-        /// Loads next event from the event provided.
+        /// Loads next events from the event provided.
         /// </summary>
         /// <param name="homeId">Identifier of the home.</param>
         /// <param name="eventId">Identifier of the event.</param>
@@ -94,12 +94,23 @@ namespace Aark.Netatmo.SDK
         }
 
         /// <summary>
+        /// Loads events until the event provided.
+        /// </summary>
+        /// <param name="homeId">Identifier of the home.</param>
+        /// <param name="eventId">Identifier of the event.</param>
+        /// <returns></returns>
+        public async Task<bool> GetSecurityEventsUntil(string homeId, string eventId)
+        {
+            return await SecurityStation.GetEventsUntil(homeId, eventId).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Gets the URL of the thumbnail of a person or event.
         /// </summary>
         /// <param name="imageId">Identifier of the image available in the face of a person or in the snapshot of an event.</param>
         /// <param name="securityKey">Security key available in the face of a person or in the snapshot of an event.</param>
         /// <returns></returns>
-        public Uri GetCameraPicture(string imageId, string securityKey)
+        public static Uri GetCameraPicture(string imageId, string securityKey)
         {
             return SecurityStation.GetCameraPicture(imageId, securityKey);
         }

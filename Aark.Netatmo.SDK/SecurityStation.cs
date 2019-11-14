@@ -76,7 +76,24 @@ namespace Aark.Netatmo.SDK
             return false;
         }
 
-        internal Uri GetCameraPicture(string imageId, string securityKey)
+        internal async Task<bool> GetEventsUntil(string homeId, string eventId)
+        {
+            foreach (Home home in Homes)
+            {
+                if (home.Id == homeId)
+                {
+                    NextEvents nextEvents = await _aPICommands.GetEventsUntil(homeId, eventId).ConfigureAwait(false);
+                    if (nextEvents != null)
+                    {
+                        home.AddEvents(nextEvents.Body.Events);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        internal static Uri GetCameraPicture(string imageId, string securityKey)
         {
             UriBuilder uriBuilder = new UriBuilder(CameraImageUrl)
             {

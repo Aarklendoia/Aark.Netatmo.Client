@@ -38,7 +38,7 @@ namespace Aark.Netatmo.SDK.Test
             {
                 if (home.Persons != null)
                 {
-                    Uri result = netatmoManager.GetCameraPicture(home.Persons[0].Face.Id, home.Persons[0].Face.Key);
+                    Uri result = NetatmoManager.GetCameraPicture(home.Persons[0].Face.Id, home.Persons[0].Face.Key);
                     Assert.IsNotNull(result, netatmoManager.GetLastError());
                     return;
                 }

@@ -1593,7 +1593,15 @@
         </member>
         <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetNextSecurityEvents(System.String,System.String)">
             <summary>
-            Loads next event from the event provided.
+            Loads next events from the event provided.
+            </summary>
+            <param name="homeId">Identifier of the home.</param>
+            <param name="eventId">Identifier of the event.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetSecurityEventsUntil(System.String,System.String)">
+            <summary>
+            Loads events until the event provided.
             </summary>
             <param name="homeId">Identifier of the home.</param>
             <param name="eventId">Identifier of the event.</param>
