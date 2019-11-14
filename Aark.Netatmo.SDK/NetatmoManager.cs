@@ -81,5 +81,15 @@ namespace Aark.Netatmo.SDK
         {
             return await SecurityStation.LoadDataAsync().ConfigureAwait(false);
         }
+
+        /// <summary>
+        /// Allows you to obtain the live video stream from a camera.
+        /// </summary>
+        /// <param name="cameraId"></param>
+        /// <returns></returns>
+        public async Task<Uri> GetLiveStream(string cameraId)
+        {
+            return await SecurityStation.GetLiveStream(cameraId).ConfigureAwait(false);
+        }
     }
 }

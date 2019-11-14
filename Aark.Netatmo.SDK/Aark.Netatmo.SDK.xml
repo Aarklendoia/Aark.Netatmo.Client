@@ -1591,6 +1591,13 @@
             </summary>
             <returns>Return <see cref="T:System.Boolean">true</see> if the data has been correctly loaded.</returns>
         </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.GetLiveStream(System.String)">
+            <summary>
+            Allows you to obtain the live video stream from a camera.
+            </summary>
+            <param name="cameraId"></param>
+            <returns></returns>
+        </member>
         <member name="T:Aark.Netatmo.SDK.SecurityStation">
             <summary>
             Netatmo Security station.

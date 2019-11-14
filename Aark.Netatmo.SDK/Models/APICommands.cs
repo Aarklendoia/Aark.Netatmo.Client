@@ -332,6 +332,21 @@ namespace Aark.Netatmo.SDK.Models
                 return homeData;
             }
         }
+
+        internal static async Task<Uri> Ping(Uri urlToPing)
+        {
+            Uri localUriPing = new Uri(urlToPing, "/command/ping");
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = localUriPing;
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                LocalUrl localUrl = new LocalUrl().FromJson(responseBody);
+                return new Uri(localUrl.Url);
+            }
+        }
         #endregion
     }
 }

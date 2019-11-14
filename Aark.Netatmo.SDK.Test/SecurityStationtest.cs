@@ -26,5 +26,13 @@ namespace Aark.Netatmo.SDK.Test
             var result = await netatmoManager.LoadSecurityDataAsync();
             Assert.IsTrue(result, netatmoManager.GetLastError());
         }
+
+        [TestMethod]
+        public async Task TestGetLiveStream()
+        {
+            await netatmoManager.LoadSecurityDataAsync();
+            var result = await netatmoManager.GetLiveStream("70:ee:50:21:f9:ee");
+            Assert.IsNotNull(result, netatmoManager.GetLastError());
+        }
     }
 }
