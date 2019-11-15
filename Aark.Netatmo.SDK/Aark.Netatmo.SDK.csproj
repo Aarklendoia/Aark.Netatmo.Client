@@ -5,7 +5,7 @@
     <Description>Provides full access to the Netatmo API for weather stations, energy management and detection cameras.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Authors>Aarklendoïa</Authors>
-    <PackageVersion>1.0.0-alpha</PackageVersion>
+    <PackageVersion>1.0.0-alpha2</PackageVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 

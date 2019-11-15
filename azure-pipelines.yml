@@ -27,7 +27,21 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
     projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
 
-# The second task is dotnet pack command again pointing to the csproj file
+ # The second task is dotnet test command
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+# The third task is the collect of coverage.
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*Tests/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+# The third task is dotnet pack command again pointing to the csproj file
 # The nobuild means the project will not be compiled before running pack, because its already built in above step
 - task: DotNetCoreCLI@2
   displayName: "dotnet pack"
