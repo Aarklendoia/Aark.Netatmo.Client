@@ -38,8 +38,7 @@ steps:
 - task: CopyFiles@2
   displayName: 'Copy appsettings.json to the output directory'
   inputs: 
-    SourceFolder: '$(AppSettings.secureFilePath)'
-    content: *.json
+    content: '$(AppSettings.secureFilePath)'
     targetFolder: '$(Build.BinariesDirectory)'
 
 # Run tests and collect of coverage.
