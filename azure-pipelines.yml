@@ -44,7 +44,6 @@ steps:
 
 # Run tests and collect of coverage.
 - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
-  displayName: 'Run tests'
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
