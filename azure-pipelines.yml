@@ -36,6 +36,12 @@ jobs:
   dependsOn: Building
   condition: succeeded()
   steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifact: 'BuildResult'
+        targetPath: '$(Pipeline.Workspace)'
+
     # Download the appsettings.json file stocked in the secure library of Azure DevOps.
     - task: DownloadSecureFile@1
       displayName: 'Get appsettings.json from secure file'
