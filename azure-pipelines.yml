@@ -57,6 +57,7 @@ jobs:
       inputs:
         command: 'test'
         projects: 'Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj'
+        arguments: '--logger trx --collect "Code coverage"'
 
     # Run tests and collect of coverage.
     - task: PublishTestResults@2
