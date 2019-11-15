@@ -219,5 +219,17 @@ namespace Aark.Netatmo.SDK
             SimpleAnswer simpleAnswer = await _aPICommands.SetPersonAway(homeId).ConfigureAwait(false);
             return simpleAnswer.Status == "ok";
         }
+
+        internal async Task<bool> RegisterWebHook(Uri url)
+        {
+            SimpleAnswer simpleAnswer = await _aPICommands.RegisterWebHook(url).ConfigureAwait(false);
+            return simpleAnswer.Status == "ok";
+        }
+
+        internal async Task<bool> UnregisterWebHook()
+        {
+            SimpleAnswer simpleAnswer = await _aPICommands.UnregisterWebHook().ConfigureAwait(false);
+            return simpleAnswer.Status == "ok";
+        }
     }
 }

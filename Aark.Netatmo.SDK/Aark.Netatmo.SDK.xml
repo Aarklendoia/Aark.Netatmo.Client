@@ -1661,6 +1661,19 @@
             <param name="homeId">Identifier of the home.</param>
             <returns></returns>
         </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.RegisterWebHook(System.Uri)">
+            <summary>
+            Links a callback url to a user.
+            </summary>
+            <param name="url">Your webhook callback url . Only http (80) and https (443) port can be used.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.UnregisterWebHook">
+            <summary>
+            Dissociates a webhook from a user.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Aark.Netatmo.SDK.SecurityStation">
             <summary>
             Netatmo Security station.

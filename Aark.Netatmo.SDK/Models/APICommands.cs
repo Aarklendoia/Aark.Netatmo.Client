@@ -500,6 +500,62 @@ namespace Aark.Netatmo.SDK.Models
                 return simpleAnswer;
             }
         }
+
+        internal async Task<SimpleAnswer> RegisterWebHook(Uri url)
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["url"] = url.ToString();
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/addwebhook");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                SimpleAnswer simpleAnswer = new SimpleAnswer().FromJson(responseBody);
+                if (simpleAnswer.Status == null)
+                {
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
+                    return null;
+                }
+                return simpleAnswer;
+            }
+        }
+
+        internal async Task<SimpleAnswer> UnregisterWebHook()
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["app_types"] = "app_security";
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/dropwebhook");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                SimpleAnswer simpleAnswer = new SimpleAnswer().FromJson(responseBody);
+                if (simpleAnswer.Status == null)
+                {
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
+                    return null;
+                }
+                return simpleAnswer;
+            }
+        }
         #endregion
     }
 }

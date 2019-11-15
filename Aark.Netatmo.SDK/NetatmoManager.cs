@@ -42,7 +42,7 @@ namespace Aark.Netatmo.SDK
                 ApplicationSecret = applicationSecret,
                 Username = username,
                 Password = password,
-                Scope = "read_station read_thermostat write_thermostat read_camera write_camera access_camera read_presence access_presence read_homecoach"
+                Scope = "read_station read_thermostat write_thermostat read_camera write_camera access_camera read_presence access_presence read_homecoach read_smokedetector"
             };
             WeatherStation = new WeatherStation(_APICommands);
             EnergyStation = new EnergyStation(_APICommands);
@@ -180,6 +180,25 @@ namespace Aark.Netatmo.SDK
         public async Task<bool> SetHomeEmpty(string homeId)
         {
             return await SecurityStation.SetHomeEmpty(homeId).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Links a callback url to a user.
+        /// </summary>
+        /// <param name="url">Your webhook callback url . Only http (80) and https (443) port can be used.</param>
+        /// <returns></returns>
+        public async Task<bool> RegisterWebHook(Uri url)
+        {
+            return await SecurityStation.RegisterWebHook(url).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Dissociates a webhook from a user.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> UnregisterWebHook()
+        {
+            return await SecurityStation.UnregisterWebHook().ConfigureAwait(false);
         }
     }
 }

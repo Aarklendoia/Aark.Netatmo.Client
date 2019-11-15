@@ -162,5 +162,19 @@ namespace Aark.Netatmo.SDK.Test
                 }
             }
         }
+
+        [TestMethod]
+        public async Task TestRegisterWebHook()
+        {
+            bool result = await netatmoManager.RegisterWebHook(new Uri("https://www.aarklendoia.com"));
+            Assert.IsTrue(result, netatmoManager.GetLastError());
+        }
+
+        [TestMethod]
+        public async Task TestUnregisterWebHook()
+        {
+            bool result = await netatmoManager.UnregisterWebHook();
+            Assert.IsTrue(result, netatmoManager.GetLastError());
+        }
     }
 }
