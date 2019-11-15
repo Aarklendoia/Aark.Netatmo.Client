@@ -36,13 +36,6 @@ jobs:
   dependsOn: Building
   condition: succeeded()
   steps:
-    - task: DotNetCoreCLI@2
-      displayName: 'Dotnet build'
-      inputs:
-        command: 'build'
-        arguments: '--configuration $(buildConfiguration)'
-        projects: 'Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj'
-
     # Download the appsettings.json file stocked in the secure library of Azure DevOps.
     - task: DownloadSecureFile@1
       displayName: 'Get appsettings.json from secure file'
@@ -58,15 +51,12 @@ jobs:
         contents: 'appsettings.json'
         targetFolder: '$(System.DefaultWorkingDirectory)\Aark.Netatmo.SDK.Test\bin\$(buildConfiguration)\netcoreapp2.2\'
 
-    - task: VSTest@2
+    - task: DotNetCoreCLI@2
       displayName: Execute tests
       continueOnError: true
       inputs:
-        testSelector: 'testAssemblies'
-        testAssemblyVer2: | 
-          **\*Test.dll
-        searchFolder: '$(System.DefaultWorkingDirectory)'
-        codeCoverageEnabled: true
+        command: 'test'
+        projects: 'Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj'
 
     # Run tests and collect of coverage.
     - task: PublishTestResults@2
