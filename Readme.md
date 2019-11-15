@@ -15,7 +15,7 @@ To use this API, you must first [declare a new application to Netatmo](https://d
 
 * Full access to weather station data (instant and historical data for base, outdoor, indoor, anenometer and raingauge modules).
 * Partial access to energy data (reading instant data only, in progress).
-* No access to security data (not started).
+* Full access security data (display of the timeline, reception of events, playback of videos and modification of people present or absent.).
 
 ## How to use
 
@@ -44,15 +44,32 @@ The loaded data will then be available in the *netatmoManager.WeatherStation* ob
 To obtain a history of the measurements of a module, you can call the *LoadMeasuresAsync()* function of the desired module by specifying the type of data to be reported. You can request several types of data simultaneously.
 
 The example below shows the historical temperature, humidity and noise data recorded by the base module of the first referenced weather station for the day of August 30, 2019:
+
 ```csharp
 DateTime start = new DateTime(2019, 8, 30, 0, 0, 0);
 DateTime end = new DateTime(2019, 8, 30, 23, 59, 59);
 await netatmoManager.WeatherStation.Devices[0].Base.DefineDateRange(start, end).LoadMeasuresAsync(MeasuresFilters.Temperature | MeasuresFilters.Humidity | MeasuresFilters.Noise);
 ```
+
 If you receive an error when connecting or recovering data, you can call *GetLastError()* to get the last error message returned by the API.
 
 ```csharp
 netatmoManager.GetLastError();
+```
+
+## How to execute test
+
+To be able to run the tests, you must create an appsettings.json file containing your access information and place it in the output directory of the test project:
+
+```json
+{
+  "ConnectionStrings": {
+    "ClientId": "xxxxxxxxxxxxxxxxxx",
+    "ClientSecret": "xxxxxxxxxxxxxxxxxxxxxxxxx",
+    "NetatmoAccount": "aarklendoia@example.com",
+    "NetatmoPassword": "MyPassword"
+  }
+}
 ```
 
 ## Authors
