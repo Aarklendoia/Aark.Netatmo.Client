@@ -57,6 +57,7 @@ jobs:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
+          **\*Test.dll
           **\*test*.dll
           !**\*TestAdapter.dll
           !**\obj\**
