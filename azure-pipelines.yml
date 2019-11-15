@@ -27,21 +27,27 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
     projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
 
- # The second task is dotnet test command
-- task: DotNetCoreCLI@2
+# Download the appsettings.json file stocked in the secure library of Azure DevOps.
+- task: DownloadSecureFile@1
   inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration)'
+    secureFile: 'appsettings.json'
+
+ # The second task is dotnet test command
+- script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
 # The third task is the collect of coverage.
-- task: DotNetCoreCLI@2
+- script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
+- task: PublishTestResults@2
   inputs:
-    command: test
-    projects: '**/*Tests/*.csproj'
-    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
-# The third task is dotnet pack command again pointing to the csproj file
+# The fourth task is dotnet pack command again pointing to the csproj file
 # The nobuild means the project will not be compiled before running pack, because its already built in above step
 - task: DotNetCoreCLI@2
   displayName: "dotnet pack"
