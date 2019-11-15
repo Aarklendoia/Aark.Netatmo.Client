@@ -37,18 +37,9 @@ steps:
 - task: CopyFiles@2
   inputs: 
     SourceFolder: '$(AppSettings.secureFilePath)'
-    contents: appsettings.json
     targetFolder: '$(Build.BinariesDirectory)'
 
-# Run tests.
-- script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-
-# Collect of coverage.
+# Run tests and collect of coverage.
 - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
 - task: PublishTestResults@2
   inputs:
