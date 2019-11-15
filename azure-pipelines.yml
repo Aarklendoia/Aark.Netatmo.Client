@@ -32,7 +32,7 @@ steps:
   inputs: 
     sourceFolder: '$(Agent.TempDirectory)'
     content: 'appsettings.json'
-    targetFolder: '$(Build.ArtifactStagingDirectory)'
+    targetFolder: '$(Build.BinariesDirectory)'
 
 # The first task is the dotnet command build, pointing to our csproj file
 - task: DotNetCoreCLI@2
