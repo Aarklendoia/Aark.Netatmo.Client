@@ -34,7 +34,7 @@ steps:
   inputs:
     secureFile: 'appsettings.json'
 
- Copy the appsettings.json file in the output directory.
+# Copy the appsettings.json file in the output directory.
 - task: CopyFiles@2
   displayName: 'Copy appsettings.json to the output directory'
   inputs: 
