@@ -18,13 +18,13 @@ variables:
 
 jobs:
 - job: Building
-    steps:
-    - task: DotNetCoreCLI@2
-      displayName: 'Dotnet build'
-      inputs:
-        command: 'build'
-        arguments: '--configuration $(buildConfiguration)'
-        projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Dotnet build'
+    inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
 
 - job: Testing
   dependsOn: Building
