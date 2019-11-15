@@ -35,8 +35,10 @@ steps:
 
 # Copy the appsettings.json file in the output directory.
 - task: CopyFiles@2
-  inputs: $(AppSettings.secureFilePath)
-  targetFolder: $(Build.BinariesDirectory)
+  inputs: 
+    SourceFolder: '$(AppSettings.secureFilePath)'
+    contents: appsettings.json
+    targetFolder: '$(Build.BinariesDirectory)'
 
 # Run tests.
 - task: VSTest@2
