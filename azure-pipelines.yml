@@ -36,11 +36,12 @@ jobs:
   dependsOn: Building
   condition: succeeded()
   steps:
-    - task: DownloadPipelineArtifact@2
+    - task: DotNetCoreCLI@2
+      displayName: 'Dotnet build'
       inputs:
-        buildType: 'current'
-        artifact: 'BuildResult'
-        targetPath: '$(Pipeline.Workspace)'
+        command: 'build'
+        arguments: '--configuration $(buildConfiguration)'
+        projects: 'Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj'
 
     # Download the appsettings.json file stocked in the secure library of Azure DevOps.
     - task: DownloadSecureFile@1
@@ -63,7 +64,7 @@ jobs:
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: | 
-          **\Aark.Netatmo.SDK.Test.dll
+          **\*Test.dll
         searchFolder: '$(System.DefaultWorkingDirectory)'
         codeCoverageEnabled: true
 
