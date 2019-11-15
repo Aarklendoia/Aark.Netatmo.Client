@@ -42,7 +42,7 @@ jobs:
       displayName: 'Copy appsettings.json to the output directory'
       inputs: 
         sourceFolder: '$(Agent.TempDirectory)'
-        content: 'appsettings.json'
+        contents: 'appsettings.json'
         targetFolder: '$(System.DefaultWorkingDirectory)\Aark.Netatmo.SDK.Test\bin\Debug\netcoreapp2.2\'
 
     # Run tests and collect of coverage.
@@ -56,6 +56,13 @@ jobs:
   dependsOn: Testing
   condition: succeeded()
   steps:
+
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
+        feedsToUse: 'select'
+
     - task: DotNetCoreCLI@2
       displayName: "Dotnet pack"
       inputs:
