@@ -22,9 +22,9 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: 'Dotnet build'
     inputs:
-    command: 'build'
-    arguments: '--configuration $(buildConfiguration)'
-    projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
+      command: 'build'
+      arguments: '--configuration $(buildConfiguration)'
+      projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
 
 - job: Testing
   dependsOn: Building
