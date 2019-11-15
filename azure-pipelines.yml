@@ -40,7 +40,7 @@ steps:
   inputs: 
     sourceFolder: '$(Agent.TempDirectory)'
     content: 'appsettings.json'
-    targetFolder: '$(Build.BinariesDirectory)\Aark.Netatmo.SDK.Test\'
+    targetFolder: '$(Build.BinariesDirectory)/Aark.Netatmo.SDK.Test/bin/Release/netcoreapp2.2'
 
 # Run tests and collect of coverage.
 - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
