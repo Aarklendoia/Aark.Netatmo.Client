@@ -19,14 +19,6 @@ variables:
 #The build has 3 seperate tasks run under 1 step
 steps:
 
-# The first task is the dotnet command build, pointing to our csproj file
-- task: DotNetCoreCLI@2
-  displayName: 'Dotnet build'
-  inputs:
-    command: 'build'
-    arguments: '--configuration $(buildConfiguration)'
-    projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
-
 # Download the appsettings.json file stocked in the secure library of Azure DevOps.
 - task: DownloadSecureFile@1
   displayName: 'Get appsettings.json from secure file'
@@ -40,7 +32,15 @@ steps:
   inputs: 
     sourceFolder: '$(Agent.TempDirectory)'
     content: 'appsettings.json'
-    targetFolder: '$(Build.BinariesDirectory)/Aark.Netatmo.SDK.Test/bin/Release/netcoreapp2.2'
+    targetFolder: '$(Build.SourcesDirectory)/Aark.Netatmo.SDK.Test/'
+
+# The first task is the dotnet command build, pointing to our csproj file
+- task: DotNetCoreCLI@2
+  displayName: 'Dotnet build'
+  inputs:
+    command: 'build'
+    arguments: '--configuration $(buildConfiguration)'
+    projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
 
 # Run tests and collect of coverage.
 - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
