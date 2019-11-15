@@ -59,12 +59,6 @@ jobs:
         projects: 'Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj'
         arguments: '--logger trx --collect "Code coverage"'
 
-    # Run tests and collect of coverage.
-    - task: PublishTestResults@2
-      inputs:
-        testRunner: VSTest
-        testResultsFiles: '**/*.trx'
-
 - job: Packaging
   dependsOn: Testing
   condition: succeeded()
