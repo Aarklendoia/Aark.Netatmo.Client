@@ -55,16 +55,15 @@ namespace Aark.Netatmo.SDK.Test
             await netatmoManager.LoadSecurityDataAsync();
             foreach (Home home in netatmoManager.SecurityStation.Homes)
             {
-                if (home.Cameras != null)
+                if (home.Cameras != null && home.Cameras.Count > 0)
                 {
                     cameraId = home.Cameras[0].Id;
                     Uri result = await netatmoManager.GetLiveStream(cameraId);
                     Assert.IsNotNull(result, netatmoManager.GetLastError());
                     return;
                 }
-                else
-                    Assert.IsTrue(false, "No camera available for this test.");
             }
+            Assert.IsTrue(false, "No camera available for this test.");
         }
 
         [TestMethod]
@@ -77,7 +76,7 @@ namespace Aark.Netatmo.SDK.Test
             await netatmoManager.LoadSecurityDataAsync();
             foreach (Home home in netatmoManager.SecurityStation.Homes)
             {
-                if (home.Cameras != null && home.Events != null)
+                if (home.Cameras != null && home.Cameras.Count > 0 && home.Events != null && home.Events.Count > 0)
                 {
                     homeId = home.Id;
                     cameraId = home.Cameras[0].Id;
@@ -108,9 +107,8 @@ namespace Aark.Netatmo.SDK.Test
                     }
                     Assert.IsTrue(false, "No video available for this test.");
                 }
-                else
-                    Assert.IsTrue(false, "No camera available for this test.");
             }
+            Assert.IsTrue(false, "No camera available for this test.");
         }
 
         [TestMethod]
