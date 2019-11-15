@@ -29,25 +29,26 @@ steps:
 
 # Download the appsettings.json file stocked in the secure library of Azure DevOps.
 - task: DownloadSecureFile@1
+  name: AppSettings
   inputs:
     secureFile: 'appsettings.json'
 
- # The second task is dotnet test command
-- script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+# Copy the appsettings.json file in the output directory.
+- task: CopyFiles@2
+  inputs: $(AppSettings.secureFilePath)
+  targetFolder: $(Build.BinariesDirectory)
 
-# The third task is the collect of coverage.
-- script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
-- task: PublishTestResults@2
+# Run tests.
+- task: VSTest@2
   inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
 
-# The fourth task is dotnet pack command again pointing to the csproj file
+# The next task is dotnet pack command again pointing to the csproj file
 # The nobuild means the project will not be compiled before running pack, because its already built in above step
 - task: DotNetCoreCLI@2
   displayName: "dotnet pack"
