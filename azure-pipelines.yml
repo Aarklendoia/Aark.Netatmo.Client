@@ -56,7 +56,7 @@ jobs:
       inputs: 
         sourceFolder: '$(Agent.TempDirectory)'
         contents: 'appsettings.json'
-        targetFolder: '$(System.DefaultWorkingDirectory)\Aark.Netatmo.SDK.Test\bin\Debug\netcoreapp2.2\'
+        targetFolder: '$(System.DefaultWorkingDirectory)\Aark.Netatmo.SDK.Test\bin\$(buildConfiguration)\netcoreapp2.2\'
 
     - task: VSTest@2
       displayName: Execute tests
