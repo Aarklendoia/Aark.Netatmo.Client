@@ -2,22 +2,26 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Aark.Netatmo.SDK.Models.Energy
+namespace Aark.Netatmo.SDK.Models.Common
 {
-    internal class SimpleAnswer
+    internal partial class ErrorMessageData
     {
-        [JsonProperty("status")]
-        internal string Status { get; set; }
+        internal struct DataError
+        {
+            [JsonProperty("code")]
+            internal long Code { get; set; }
 
-        [JsonProperty("time_exec")]
-        internal double TimeExec { get; set; }
+            [JsonProperty("message")]
+            internal string Message { get; set; }
+        }
 
-        [JsonProperty("time_server")]
-        internal long TimeServer { get; set; }
 
+        [JsonProperty("error")]
+        internal DataError Error { get; set; }
+    
         private readonly JsonSerializerSettings Settings;
 
-        public SimpleAnswer()
+        public ErrorMessageData()
         {
             Settings = new JsonSerializerSettings
             {
@@ -30,6 +34,6 @@ namespace Aark.Netatmo.SDK.Models.Energy
             };
         }
 
-        internal SimpleAnswer FromJson(string json) => JsonConvert.DeserializeObject<SimpleAnswer>(json, Settings);
+        public ErrorMessageData FromJson(string json) => JsonConvert.DeserializeObject<ErrorMessageData>(json, Settings);
     }
 }

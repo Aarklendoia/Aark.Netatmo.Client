@@ -1,5 +1,6 @@
 ﻿using Aark.Netatmo.SDK.Helpers;
 using Aark.Netatmo.SDK.Models;
+using Aark.Netatmo.SDK.Models.Common;
 using Aark.Netatmo.SDK.Models.Security;
 using Aark.Netatmo.SDK.Security;
 using System;
@@ -199,6 +200,24 @@ namespace Aark.Netatmo.SDK
                 }
             }
             return false;
+        }
+
+        internal async Task<bool> SetPersonsHome(string homeId, List<string> personIds)
+        {
+            SimpleAnswer simpleAnswer = await _aPICommands.SetPersonsHome(homeId, personIds).ConfigureAwait(false);
+            return simpleAnswer.Status == "ok";
+        }
+
+        internal async Task<bool> SetPersonAway(string homeId, string personId)
+        {
+            SimpleAnswer simpleAnswer = await _aPICommands.SetPersonAway(homeId, personId).ConfigureAwait(false);
+            return simpleAnswer.Status == "ok";
+        }
+
+        internal async Task<bool> SetHomeEmpty(string homeId)
+        {
+            SimpleAnswer simpleAnswer = await _aPICommands.SetPersonAway(homeId).ConfigureAwait(false);
+            return simpleAnswer.Status == "ok";
         }
     }
 }

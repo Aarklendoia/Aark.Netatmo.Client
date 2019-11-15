@@ -1,6 +1,7 @@
 ﻿using Aark.Netatmo.SDK.Models;
 using Aark.Netatmo.SDK.Security;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -147,6 +148,38 @@ namespace Aark.Netatmo.SDK
         public async Task<Uri> GetVodStream(string cameraId, string videoId)
         {
             return await SecurityStation.GetVodStream(cameraId, videoId).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Indicates that the people on the list provided are at home.
+        /// </summary>
+        /// <param name="homeId">Identifier of the home.</param>
+        /// <param name="personIds">list of identifiers of the persons.</param>
+        /// <returns></returns>
+        public async Task<bool> SetPersonsAtHome(string homeId, List<string> personIds)
+        {
+            return await SecurityStation.SetPersonsHome(homeId, personIds).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Indicates that the people provided is away from home.
+        /// </summary>
+        /// <param name="homeId">Identifier of the home.</param>
+        /// <param name="personId">Iidentifiers of the person.</param>
+        /// <returns></returns>
+        public async Task<bool> SetPersonAwayFromHome(string homeId, string personId)
+        {
+            return await SecurityStation.SetPersonAway(homeId, personId).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Indicates that all the people are away and the home is empty.
+        /// </summary>
+        /// <param name="homeId">Identifier of the home.</param>
+        /// <returns></returns>
+        public async Task<bool> SetHomeEmpty(string homeId)
+        {
+            return await SecurityStation.SetHomeEmpty(homeId).ConfigureAwait(false);
         }
     }
 }

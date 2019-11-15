@@ -1638,6 +1638,29 @@
             <param name="videoId">Identifier of the video.</param>
             <returns></returns>
         </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.SetPersonsAtHome(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Indicates that the people on the list provided are at home.
+            </summary>
+            <param name="homeId">Identifier of the home.</param>
+            <param name="personIds">list of identifiers of the persons.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.SetPersonAwayFromHome(System.String,System.String)">
+            <summary>
+            Indicates that the people provided is away from home.
+            </summary>
+            <param name="homeId">Identifier of the home.</param>
+            <param name="personId">Iidentifiers of the person.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Aark.Netatmo.SDK.NetatmoManager.SetHomeEmpty(System.String)">
+            <summary>
+            Indicates that all the people are away and the home is empty.
+            </summary>
+            <param name="homeId">Identifier of the home.</param>
+            <returns></returns>
+        </member>
         <member name="T:Aark.Netatmo.SDK.SecurityStation">
             <summary>
             Netatmo Security station.

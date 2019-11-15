@@ -133,8 +133,8 @@ namespace Aark.Netatmo.SDK.Models
                 StationData stationData = new StationData().FromJson(responseBody);
                 if (stationData.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return stationData;
@@ -170,8 +170,8 @@ namespace Aark.Netatmo.SDK.Models
                 MeasuresData measuresData = new MeasuresData().FromJson(responseBody);
                 if (measuresData.Content == null)
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return measuresData;
@@ -199,8 +199,8 @@ namespace Aark.Netatmo.SDK.Models
                 HomesData homesData = new HomesData().FromJson(responseBody);
                 if (homesData.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return homesData;
@@ -228,8 +228,8 @@ namespace Aark.Netatmo.SDK.Models
                 HomeStatus homeStatus = new HomeStatus().FromJson(responseBody);
                 if (homeStatus.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return homeStatus;
@@ -265,8 +265,8 @@ namespace Aark.Netatmo.SDK.Models
                 RoomMeasures roomMeasures = new RoomMeasures().FromJson(responseBody);
                 if (roomMeasures.Body == null)
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return roomMeasures;
@@ -295,8 +295,8 @@ namespace Aark.Netatmo.SDK.Models
                 SimpleAnswer simpleAnswer = new SimpleAnswer().FromJson(responseBody);
                 if (simpleAnswer.Status == null)
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return simpleAnswer;
@@ -327,8 +327,8 @@ namespace Aark.Netatmo.SDK.Models
                 HomeData homeData = new HomeData().FromJson(responseBody);
                 if (homeData.Status != "ok")
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return homeData;
@@ -357,8 +357,8 @@ namespace Aark.Netatmo.SDK.Models
                 NextEvents nextEvents = new NextEvents().FromJson(responseBody);
                 if (nextEvents.Body.Events.Count == 0) // TODO best method to known if a error occurs?
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return nextEvents;
@@ -387,8 +387,8 @@ namespace Aark.Netatmo.SDK.Models
                 NextEvents nextEvents = new NextEvents().FromJson(responseBody);
                 if (nextEvents.Body.Events.Count == 0) // TODO best method to known if a error occurs?
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return nextEvents;
@@ -416,8 +416,8 @@ namespace Aark.Netatmo.SDK.Models
                 NextEvents nextEvents = new NextEvents().FromJson(responseBody);
                 if (nextEvents.Body.Events.Count == 0) // TODO best method to known if a error occurs?
                 {
-                    ErrorMeasuresData errorMeasuresData = new ErrorMeasuresData().FromJson(responseBody);
-                    _errorMessage = errorMeasuresData.Error.Message;
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
                     return null;
                 }
                 return nextEvents;
@@ -436,6 +436,68 @@ namespace Aark.Netatmo.SDK.Models
                 string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 LocalUrl localUrl = new LocalUrl().FromJson(responseBody);
                 return new Uri(localUrl.Url);
+            }
+        }
+
+        internal async Task<SimpleAnswer> SetPersonsHome(string homeId, List<string> personIds)
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            PersonsAtHome personsAtHome = new PersonsAtHome()
+            {
+                HomeId = homeId
+            };
+            personsAtHome.PersonIds = new List<string>();
+            personsAtHome.PersonIds.AddRange(personIds);
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/setpersonshome");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(personsAtHome.ToJson(), Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                SimpleAnswer simpleAnswer = new SimpleAnswer().FromJson(responseBody);
+                if (simpleAnswer.Status == null)
+                {
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
+                    return null;
+                }
+                return simpleAnswer;
+            }
+        }
+
+        internal async Task<SimpleAnswer> SetPersonAway(string homeId, string personId = "")
+        {
+            if (!await CheckConnectionAsync().ConfigureAwait(false))
+                return null;
+            var parameters = HttpUtility.ParseQueryString(string.Empty);
+            parameters["home_id"] = homeId;
+            if (!string.IsNullOrEmpty(personId))
+                parameters["person_id"] = personId;
+
+            using (HttpClient client = new HttpClient())
+            using (HttpRequestMessage request = new HttpRequestMessage())
+            {
+                request.Method = HttpMethod.Post;
+                request.RequestUri = new Uri(host + apiPath + "/setpersonsaway");
+
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
+                request.Content = new StringContent(parameters.ToString(), Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                SimpleAnswer simpleAnswer = new SimpleAnswer().FromJson(responseBody);
+                if (simpleAnswer.Status == null)
+                {
+                    ErrorMessageData errorMessageData = new ErrorMessageData().FromJson(responseBody);
+                    _errorMessage = errorMessageData.Error.Message;
+                    return null;
+                }
+                return simpleAnswer;
             }
         }
         #endregion

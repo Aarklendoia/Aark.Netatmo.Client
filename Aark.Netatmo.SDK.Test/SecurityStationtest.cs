@@ -5,6 +5,7 @@ using System.IO;
 using System;
 using Aark.Netatmo.SDK.Security;
 using Aark.Netatmo.SDK.Helpers;
+using System.Collections.Generic;
 
 namespace Aark.Netatmo.SDK.Test
 {
@@ -109,6 +110,56 @@ namespace Aark.Netatmo.SDK.Test
                 }
                 else
                     Assert.IsTrue(false, "No camera available for this test.");
+            }
+        }
+
+        [TestMethod]
+        public async Task TestSetPersonsAtHome()
+        {
+            await netatmoManager.LoadSecurityDataAsync();
+            foreach (Home home in netatmoManager.SecurityStation.Homes)
+            {
+                if (home.Persons != null)
+                {
+                    List<string> personIds = new List<string>();
+                    foreach (Person person in home.Persons)
+                    {
+                        personIds.Add(person.Id);
+                    }
+                    bool result = await netatmoManager.SetPersonsAtHome(home.Id, personIds);
+                    Assert.IsTrue(result, netatmoManager.GetLastError());
+                    return;
+                }
+            }
+        }
+
+        [TestMethod]
+        public async Task TestSetPersonAwayFromHome()
+        {
+            await netatmoManager.LoadSecurityDataAsync();
+            foreach (Home home in netatmoManager.SecurityStation.Homes)
+            {
+                if (home.Persons != null)
+                {
+                    bool result = await netatmoManager.SetPersonAwayFromHome(home.Id, home.Persons[0].Id);
+                    Assert.IsTrue(result, netatmoManager.GetLastError());
+                    return;
+                }
+            }
+        }
+
+        [TestMethod]
+        public async Task TestSetHomeEmpty()
+        {
+            await netatmoManager.LoadSecurityDataAsync();
+            foreach (Home home in netatmoManager.SecurityStation.Homes)
+            {
+                if (home.Persons != null)
+                {
+                    bool result = await netatmoManager.SetHomeEmpty(home.Id);
+                    Assert.IsTrue(result, netatmoManager.GetLastError());
+                    return;
+                }
             }
         }
     }
