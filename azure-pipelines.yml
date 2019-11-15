@@ -41,15 +41,19 @@ steps:
     targetFolder: '$(Build.BinariesDirectory)'
 
 # Run tests.
-- task: VSTest@2
+- script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\*test*.dll
-      **\*Test.dll
-      !**\*TestAdapter.dll
-      !**\obj\**
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+
+# Collect of coverage.
+- script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
+- task: PublishTestResults@2
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 
 # The next task is dotnet pack command again pointing to the csproj file
 # The nobuild means the project will not be compiled before running pack, because its already built in above step
