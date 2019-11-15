@@ -21,7 +21,7 @@ steps:
 
 # The first task is the dotnet command build, pointing to our csproj file
 - task: DotNetCoreCLI@2
-  displayName: 'dotnet build'
+  displayName: 'Dotnet build'
   inputs:
     command: 'build'
     arguments: '--configuration $(buildConfiguration)'
@@ -29,18 +29,22 @@ steps:
 
 # Download the appsettings.json file stocked in the secure library of Azure DevOps.
 - task: DownloadSecureFile@1
+  displayName: 'Get appsettings.json from secure file'
   name: AppSettings
   inputs:
     secureFile: 'appsettings.json'
 
 # Copy the appsettings.json file in the output directory.
 - task: CopyFiles@2
+  displayName: 'Copy appsettings.json to the output directory'
   inputs: 
     SourceFolder: '$(AppSettings.secureFilePath)'
+    content: *.json
     targetFolder: '$(Build.BinariesDirectory)'
 
 # Run tests and collect of coverage.
 - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
+  displayName: 'Run tests'
 - task: PublishTestResults@2
   inputs:
     testRunner: VSTest
@@ -49,7 +53,7 @@ steps:
 # The next task is dotnet pack command again pointing to the csproj file
 # The nobuild means the project will not be compiled before running pack, because its already built in above step
 - task: DotNetCoreCLI@2
-  displayName: "dotnet pack"
+  displayName: "Dotnet pack"
   inputs:
     command: 'pack'
     arguments: '--configuration $(buildConfiguration)'
@@ -62,7 +66,7 @@ steps:
 # allowPackageConflicts allows us to build the same version and not throw an error when trying to push
 # instead it just ingores the latest package unless the version changes
 - task: NuGetCommand@2
-  displayName: 'nuget push'
+  displayName: 'Nuget push'
   inputs:
     command: 'push'
     feedsToUse: 'select'
