@@ -34,19 +34,13 @@ steps:
   inputs:
     secureFile: 'appsettings.json'
 
-# Copy the appsettings.json file in the output directory.
-#- task: CopyFiles@2
-#  displayName: 'Copy appsettings.json to the output directory'
-#  inputs: 
-#    content: '$(AppSettings.secureFilePath)'
-#    targetFolder: '$(Build.BinariesDirectory)'
-
-# Copy the appsettings.json file in the output directory.
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      Copy-Item -Path $(AppSettings.secureFilePath) -Destination $(Build.BinariesDirectory)
+ Copy the appsettings.json file in the output directory.
+- task: CopyFiles@2
+  displayName: 'Copy appsettings.json to the output directory'
+  inputs: 
+    sourceFolder: '$(Agent.TempDirectory)'
+    content: 'appsettings.json'
+    targetFolder: '$(Build.BinariesDirectory)\Aark.Netatmo.SDK.Test\'
 
 # Run tests and collect of coverage.
 - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
