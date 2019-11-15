@@ -26,6 +26,12 @@ jobs:
       arguments: '--configuration $(buildConfiguration)'
       projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
 
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Pipeline.Workspace)'
+      artifact: 'BuildResult'
+      publishLocation: 'pipeline'
+
 - job: Testing
   dependsOn: Building
   condition: succeeded()
@@ -45,8 +51,20 @@ jobs:
         contents: 'appsettings.json'
         targetFolder: '$(System.DefaultWorkingDirectory)\Aark.Netatmo.SDK.Test\bin\Debug\netcoreapp2.2\'
 
+    - task: VSTest@2
+      displayName: Execute tests
+      continueOnError: true
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: |
+          **\*test*.dll
+          !**\*TestAdapter.dll
+          !**\obj\**
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+        codeCoverageEnabled: true
+
     # Run tests and collect of coverage.
-    - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
+#    - script: dotnet test Aark.Netatmo.SDK.Test/Aark.Netatmo.SDK.Test.csproj --logger trx --collect "Code coverage"
     - task: PublishTestResults@2
       inputs:
         testRunner: VSTest
@@ -62,6 +80,12 @@ jobs:
         command: 'restore'
         projects: 'Aark.Netatmo.SDK/Aark.Netatmo.SDK.csproj'
         feedsToUse: 'select'
+
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifact: 'BuildResult'
+        targetPath: '$(Pipeline.Workspace)'
 
     - task: DotNetCoreCLI@2
       displayName: "Dotnet pack"
