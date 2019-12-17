@@ -3,16 +3,24 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Provides full access to the Netatmo API for weather stations, energy management and detection cameras.</Description>
+    <Authors>Arklendoïa</Authors>
+    <Description>Security headers for WebAPI.</Description>
+    <Copyright>2019 Arklendoïa</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Authors>Aarklendoïa</Authors>
-    <PackageVersion>1.0.0-alpha2</PackageVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/Aarklendoia/Aark.Netatmo.SDK</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Aarklendoia/Aark.Netatmo.SDK</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.0-alpha2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>Aark.Netatmo.SDK.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
