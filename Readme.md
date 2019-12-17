@@ -2,11 +2,6 @@
 
 Aark.Netatmo.SDK is a library providing simple and complete access to Netatmo device data. It is based on the API provided by Netatmo through its [Netatmo Connect](https://dev.netatmo.com/) program.
 
-## Current status
-
-[![Board Status](https://dev.azure.com/aarklendoia/06099e08-821c-4a1e-8560-171b5a013fe6/281e0cef-528b-4d75-9990-220973046722/_apis/work/boardbadge/2da2fbba-f7ea-474d-8ff7-c4e80b463714?columnOptions=1)](https://dev.azure.com/aarklendoia/06099e08-821c-4a1e-8560-171b5a013fe6/_boards/board/t/281e0cef-528b-4d75-9990-220973046722/Microsoft.RequirementCategory/)
-[![Build Status](https://dev.azure.com/aarklendoia/Aark.Netatmo.SDK/_apis/build/status/Aarklendoia.Aark.Netatmo.SDK?branchName=master)](https://dev.azure.com/aarklendoia/Aark.Netatmo.SDK/_build/latest?definitionId=26&branchName=master)
-
 ## Getting Started
 
 To use this API, you must first [declare a new application to Netatmo](https://dev.netatmo.com/myaccount/createanapp) in order to obtain a Client ID and a Client Secret.
