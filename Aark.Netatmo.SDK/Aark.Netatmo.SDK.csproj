@@ -2,9 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>Provides full access to the Netatmo API for weather stations, energy management and detection cameras.</Description>
     <Authors>Arklendoïa</Authors>
-    <Description>Security headers for WebAPI.</Description>
+    <Description>Simple access to Netatmo API.</Description>
     <Copyright>2019 Arklendoïa</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Aarklendoia/Aark.Netatmo.SDK</PackageProjectUrl>
