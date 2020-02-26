@@ -3,14 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Arklendoïa</Authors>
-    <Description>Simple access to Netatmo API.</Description>
+    <Description>SDK to develop its own application using data from Netatmo devices.</Description>
     <Copyright>2019 Arklendoïa</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Aarklendoia/Aark.Netatmo.SDK</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Aarklendoia/Aark.Netatmo.SDK</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0-alpha4</Version>
+    <Version>1.0.0-alpha5</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -20,10 +20,16 @@
   <PropertyGroup>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageIconUrl />
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="nuget.exe" />
+    <None Include="Assets\logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
